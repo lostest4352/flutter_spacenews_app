@@ -44,7 +44,7 @@ class _MyHomeState extends State<MyHome> {
                 }
                 return ListenableBuilder(
                   listenable: tileClicked,
-                  builder: (context, snapshot) {
+                  builder: (context, child) {
                     return ListTile(
                       selected: true,
                       selectedTileColor: (tileClicked.value[index] != true)
