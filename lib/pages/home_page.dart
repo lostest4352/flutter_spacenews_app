@@ -56,12 +56,19 @@ class _MyHomeState extends State<MyHome> {
                       onTap: () {
                         if (tileClicked.value.contains(true)) {
                           changeListTileState(index);
+                          List trueItems = [];
+                          for (final boolItem in tileClicked.value) {
+                            if (boolItem == true) {
+                              trueItems.add(boolItem);
+                            }
+                          }
+                          debugPrint("selected items length: ${trueItems.length.toString()}");
                         }
                       },
                       title: const Text("title"),
                       subtitle: const Text("subtitle"),
                       leading: CircleAvatar(
-                        backgroundColor: Colors.deepPurple.shade800,
+                        backgroundColor: Colors.purple.shade800,
                         child: Text((index + 1).toString()),
                       ),
                     );
