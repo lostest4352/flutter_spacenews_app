@@ -42,22 +42,23 @@ class _MyHomeState extends State<MyHome> {
                 if (tileClicked.value.isEmpty) {
                   tileClicked.value = List.filled(5, false);
                 }
-                return ListenableBuilder(
-                  listenable: tileClicked,
-                  builder: (context, child) {
+                // If issues happen use ListenableBuilder again
+                return ValueListenableBuilder(
+                  valueListenable: tileClicked,
+                  builder: (context, value, child) {
                     return ListTile(
                       selected: true,
-                      selectedTileColor: (tileClicked.value[index] != true)
+                      selectedTileColor: (value[index] != true)
                           ? null
                           : Colors.grey.shade800,
                       onLongPress: () {
                         changeListTileState(index);
                       },
                       onTap: () {
-                        if (tileClicked.value.contains(true)) {
+                        if (value.contains(true)) {
                           changeListTileState(index);
                           List trueItems = [];
-                          for (final boolItem in tileClicked.value) {
+                          for (final boolItem in value) {
                             if (boolItem == true) {
                               trueItems.add(boolItem);
                             }
