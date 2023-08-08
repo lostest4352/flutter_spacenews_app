@@ -38,7 +38,7 @@ class _MyHomeState extends State<MyHome> {
             child: ListView.builder(
               itemCount: 5,
               itemBuilder: (context, index) {
-                // Fill only when its empty otherwise there is null error
+                // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                 if (tileClicked.value.isEmpty) {
                   tileClicked.value = List.filled(5, false);
                 }
@@ -61,6 +61,7 @@ class _MyHomeState extends State<MyHome> {
                       title: const Text("title"),
                       subtitle: const Text("subtitle"),
                       leading: CircleAvatar(
+                        backgroundColor: Colors.deepPurple.shade800,
                         child: Text((index + 1).toString()),
                       ),
                     );
