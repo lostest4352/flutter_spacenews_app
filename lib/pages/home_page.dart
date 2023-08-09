@@ -32,36 +32,31 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         title: const Text("My App"),
       ),
-      body: Column(
-        children: [
-          ListenableBuilder(
-            listenable: tileClicked,
-            builder: (context, child) {
-              //
-              List selectedItems = [];
-              for (final boolItem in tileClicked.value) {
-                if (boolItem == true) {
-                  selectedItems.add(boolItem);
-                }
-              }
-              return Card(
+      body: ValueListenableBuilder(
+        valueListenable: tileClicked,
+        builder: (context, tileValue, child) {
+          //
+          List selectedItems = [];
+          for (final boolItem in tileValue) {
+            if (boolItem == true) {
+              selectedItems.add(boolItem);
+            }
+          }
+          return Column(
+            children: [
+              Card(
                 child: (selectedItems.isNotEmpty)
                     ? ListTile(
                         title: Text("${selectedItems.length} items selected"),
                       )
                     : null,
-              );
-            },
-          ),
-          Expanded(
-            child: ListenableBuilder(
-              listenable: tileClicked,
-              builder: (context, child) {
-                return ListView.builder(
+              ),
+              Expanded(
+                child: ListView.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                    if (tileClicked.value.isEmpty) {
+                    if (tileValue.isEmpty) {
                       // tileClicked.value = List.filled(5, false);
 
                       // Longer form of above code
@@ -74,17 +69,18 @@ class _MyHomeState extends State<MyHome> {
 
                     return ListTile(
                       selected: true,
-                      selectedTileColor: (tileClicked.value[index] != true)
-                          ? null
-                          : Colors.grey.shade800,
+                      selectedTileColor:
+                          (index < tileValue.length && tileValue[index])
+                              ? Colors.grey.shade800
+                              : null,
                       onLongPress: () {
                         changeListTileState(index);
                       },
                       onTap: () {
-                        if (tileClicked.value.contains(true)) {
+                        if (tileValue.contains(true)) {
                           changeListTileState(index);
                           List itemsContainingTrue = [];
-                          for (final boolItem in tileClicked.value) {
+                          for (final boolItem in tileValue) {
                             if (boolItem == true) {
                               itemsContainingTrue.add(boolItem);
                             }
@@ -101,11 +97,11 @@ class _MyHomeState extends State<MyHome> {
                       ),
                     );
                   },
-                );
-              },
-            ),
-          )
-        ],
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
