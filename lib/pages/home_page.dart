@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_api_1/services/bool_change_notifier.dart';
+import 'package:flutter_api_1/services/bool_notifier.dart';
 
 
 class MyHome extends StatefulWidget {
