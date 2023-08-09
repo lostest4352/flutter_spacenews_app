@@ -7,6 +7,8 @@ class ListValueNotifier<T> extends ValueNotifier<T> {
 
   @override
   void notifyListeners() {
-    super.notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      super.notifyListeners();
+    });
   }
 }

@@ -20,6 +20,12 @@ class _MyHomeState extends State<MyHome> {
     tileClicked.notifyListeners();
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   tileClicked.value = List.filled(5, false);   
+  // }
+
   @override
   void dispose() {
     tileClicked.dispose();
@@ -54,29 +60,29 @@ class _MyHomeState extends State<MyHome> {
             },
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                if (tileClicked.value.isEmpty) {
-                  // tileClicked.value = List.filled(5, false);
+            child: ListenableBuilder(
+              listenable: tileClicked,
+              builder: (context, child) {
+                return ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
+                    if (tileClicked.value.isEmpty) {
+                      // tileClicked.value = List.filled(5, false);
 
-                  // Longer form of above code
-                  List<bool> listTileBool = [];
-                  for (int i = 0; i < 5; i++) {
-                    listTileBool.add(false);
-                    tileClicked.value = listTileBool;
-                  }
-                }
+                      // Longer form of above code
+                      List<bool> listTileBool = [];
+                      for (int i = 0; i < 5; i++) {
+                        listTileBool.add(false);
+                        tileClicked.value = listTileBool;
+                      }
+                    }
 
-                // If issues happen use ListenableBuilder again
-                return ListenableBuilder(
-                  listenable: tileClicked,
-                  builder: (context, child) {
                     return ListTile(
                       selected: true,
-                      selectedTileColor:
-                          (tileClicked.value[index] != true) ? null : Colors.grey.shade800,
+                      selectedTileColor: (tileClicked.value[index] != true)
+                          ? null
+                          : Colors.grey.shade800,
                       onLongPress: () {
                         changeListTileState(index);
                       },
