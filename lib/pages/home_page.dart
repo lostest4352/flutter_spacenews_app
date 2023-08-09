@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../widgets/list_value_notifier.dart';
 
@@ -20,6 +21,8 @@ class _MyHomeState extends State<MyHome> {
     tileClicked.notifyListeners();
   }
 
+
+
   @override
   void dispose() {
     tileClicked.dispose();
@@ -35,31 +38,42 @@ class _MyHomeState extends State<MyHome> {
       body: Column(
         children: [
           ValueListenableBuilder(
-              valueListenable: tileClicked,
-              builder: (context, value, snapshot) {
-                //
-                List selectedItems = [];
-                for (final boolItem in value) {
-                  if (boolItem == true) {
-                    selectedItems.add(boolItem);
-                  }
+            valueListenable: tileClicked,
+            builder: (context, value, snapshot) {
+              //
+
+              List selectedItems = [];
+              for (final boolItem in value) {
+                if (boolItem == true) {
+                  selectedItems.add(boolItem);
                 }
-                return Card(
-                  child: (selectedItems.isNotEmpty)
-                      ? ListTile(
-                          title: Text("${selectedItems.length} items selected"),
-                        )
-                      : null,
-                );
-              }),
+              }
+              return Card(
+                child: (selectedItems.isNotEmpty)
+                    ? ListTile(
+                        title: Text("${selectedItems.length} items selected"),
+                      )
+                    : null,
+              );
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: 5,
               itemBuilder: (context, index) {
                 // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                 if (tileClicked.value.isEmpty) {
-                  tileClicked.value = List.filled(5, false);
+                  // tileClicked.value = List.filled(5, false);
+                  
+                  // Longer form of above code
+                  List<bool> listTileBool = [];
+                  for (int i = 0; i < 5; i++) {
+                    listTileBool.add(false);
+                    tileClicked.value = listTileBool;
+                  }
                 }
+
+
                 // If issues happen use ListenableBuilder again
                 return ValueListenableBuilder(
                   valueListenable: tileClicked,
