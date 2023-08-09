@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 import '../widgets/list_value_notifier.dart';
 
@@ -21,8 +20,6 @@ class _MyHomeState extends State<MyHome> {
     tileClicked.notifyListeners();
   }
 
-
-
   @override
   void dispose() {
     tileClicked.dispose();
@@ -37,13 +34,12 @@ class _MyHomeState extends State<MyHome> {
       ),
       body: Column(
         children: [
-          ValueListenableBuilder(
-            valueListenable: tileClicked,
-            builder: (context, value, snapshot) {
+          ListenableBuilder(
+            listenable: tileClicked,
+            builder: (context, child) {
               //
-
               List selectedItems = [];
-              for (final boolItem in value) {
+              for (final boolItem in tileClicked.value) {
                 if (boolItem == true) {
                   selectedItems.add(boolItem);
                 }
@@ -64,7 +60,7 @@ class _MyHomeState extends State<MyHome> {
                 // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                 if (tileClicked.value.isEmpty) {
                   // tileClicked.value = List.filled(5, false);
-                  
+
                   // Longer form of above code
                   List<bool> listTileBool = [];
                   for (int i = 0; i < 5; i++) {
@@ -73,23 +69,22 @@ class _MyHomeState extends State<MyHome> {
                   }
                 }
 
-
                 // If issues happen use ListenableBuilder again
-                return ValueListenableBuilder(
-                  valueListenable: tileClicked,
-                  builder: (context, value, child) {
+                return ListenableBuilder(
+                  listenable: tileClicked,
+                  builder: (context, child) {
                     return ListTile(
                       selected: true,
                       selectedTileColor:
-                          (value[index] != true) ? null : Colors.grey.shade800,
+                          (tileClicked.value[index] != true) ? null : Colors.grey.shade800,
                       onLongPress: () {
                         changeListTileState(index);
                       },
                       onTap: () {
-                        if (value.contains(true)) {
+                        if (tileClicked.value.contains(true)) {
                           changeListTileState(index);
                           List trueItems = [];
-                          for (final boolItem in value) {
+                          for (final boolItem in tileClicked.value) {
                             if (boolItem == true) {
                               trueItems.add(boolItem);
                             }
