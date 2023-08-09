@@ -20,12 +20,6 @@ class _MyHomeState extends State<MyHome> {
     tileClicked.notifyListeners();
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   tileClicked.value = List.filled(5, false);   
-  // }
-
   @override
   void dispose() {
     tileClicked.dispose();
@@ -89,14 +83,14 @@ class _MyHomeState extends State<MyHome> {
                       onTap: () {
                         if (tileClicked.value.contains(true)) {
                           changeListTileState(index);
-                          List trueItems = [];
+                          List itemsContainingTrue = [];
                           for (final boolItem in tileClicked.value) {
                             if (boolItem == true) {
-                              trueItems.add(boolItem);
+                              itemsContainingTrue.add(boolItem);
                             }
                           }
                           debugPrint(
-                              "selected items length: ${trueItems.length.toString()}");
+                              "selected items length: ${itemsContainingTrue.length.toString()}");
                         }
                       },
                       title: const Text("title"),
