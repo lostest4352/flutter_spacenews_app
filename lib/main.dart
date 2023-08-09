@@ -24,7 +24,11 @@ class MyApp extends StatelessWidget {
     return SafeArea(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
+        theme: FlexThemeData.light(
+          scheme: FlexScheme.mandyRed,
+          // primary: Colors.black,
+          // appBarBackground: Colors.red
+        ),
         darkTheme: FlexThemeData.dark(
           scheme: FlexScheme.mandyRed,
           colorScheme: const ColorScheme.dark(primary: Colors.white),

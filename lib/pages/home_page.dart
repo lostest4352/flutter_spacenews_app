@@ -34,6 +34,24 @@ class _MyHomeState extends State<MyHome> {
       ),
       body: Column(
         children: [
+          ValueListenableBuilder(
+              valueListenable: tileClicked,
+              builder: (context, value, snapshot) {
+                //
+                List selectedItems = [];
+                for (final boolItem in value) {
+                  if (boolItem == true) {
+                    selectedItems.add(boolItem);
+                  }
+                }
+                return Card(
+                  child: (selectedItems.isNotEmpty)
+                      ? ListTile(
+                          title: Text("${selectedItems.length} items selected"),
+                        )
+                      : null,
+                );
+              }),
           Expanded(
             child: ListView.builder(
               itemCount: 5,
@@ -48,9 +66,8 @@ class _MyHomeState extends State<MyHome> {
                   builder: (context, value, child) {
                     return ListTile(
                       selected: true,
-                      selectedTileColor: (value[index] != true)
-                          ? null
-                          : Colors.grey.shade800,
+                      selectedTileColor:
+                          (value[index] != true) ? null : Colors.grey.shade800,
                       onLongPress: () {
                         changeListTileState(index);
                       },
@@ -63,7 +80,8 @@ class _MyHomeState extends State<MyHome> {
                               trueItems.add(boolItem);
                             }
                           }
-                          debugPrint("selected items length: ${trueItems.length.toString()}");
+                          debugPrint(
+                              "selected items length: ${trueItems.length.toString()}");
                         }
                       },
                       title: const Text("title"),
