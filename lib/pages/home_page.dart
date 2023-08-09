@@ -32,12 +32,12 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         title: const Text("My App"),
       ),
-      body: ValueListenableBuilder(
-        valueListenable: tileClicked,
-        builder: (context, tileValue, child) {
+      body: ListenableBuilder(
+        listenable: tileClicked,
+        builder: (context, child) {
           //
           List selectedItems = [];
-          for (final boolItem in tileValue) {
+          for (final boolItem in tileClicked.value) {
             if (boolItem == true) {
               selectedItems.add(boolItem);
             }
@@ -56,7 +56,7 @@ class _MyHomeState extends State<MyHome> {
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                    if (tileValue.isEmpty) {
+                    if (tileClicked.value.isEmpty) {
                       // tileClicked.value = List.filled(5, false);
 
                       // Longer form of above code
@@ -70,17 +70,17 @@ class _MyHomeState extends State<MyHome> {
                     return ListTile(
                       selected: true,
                       selectedTileColor:
-                          (index < tileValue.length && tileValue[index])
+                          (index < tileClicked.value.length && tileClicked.value[index])
                               ? Colors.grey.shade800
                               : null,
                       onLongPress: () {
                         changeListTileState(index);
                       },
                       onTap: () {
-                        if (tileValue.contains(true)) {
+                        if (tileClicked.value.contains(true)) {
                           changeListTileState(index);
                           List itemsContainingTrue = [];
-                          for (final boolItem in tileValue) {
+                          for (final boolItem in tileClicked.value) {
                             if (boolItem == true) {
                               itemsContainingTrue.add(boolItem);
                             }
