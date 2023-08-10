@@ -34,8 +34,7 @@ class _MyHomeState extends State<MyHome> {
               Card(
                 child: (selectedItems.isNotEmpty)
                     ? ListTile(
-                        title: Text("${selectedItems.length} items selected"),
-                      )
+                        title: Text("${selectedItems.length} items selected"))
                     : null,
               ),
               Expanded(
