@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/services/bool_notifier.dart';
 
-
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
 
@@ -13,20 +12,6 @@ class _MyHomeState extends State<MyHome> {
   bool tilePressed = false;
 
   final boolNotifier = BoolNotifier();
-
-  // List<bool> buttonsClicked = [];
-  // ListValueNotifier<List<bool>> tileClicked = ListValueNotifier<List<bool>>([]);
-
-  // void changeListTileState(int index) {
-  //   tileClicked.value[index] = !tileClicked.value[index];
-  //   tileClicked.notifyListeners();
-  // }
-
-  // @override
-  // void dispose() {
-  //   tileClicked.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +57,15 @@ class _MyHomeState extends State<MyHome> {
                     return ListTile(
                       selected: true,
                       selectedTileColor:
-                          (index < boolNotifier.tileClicked.length &&
+                          (boolNotifier.tileClicked.length > index &&
                                   boolNotifier.tileClicked[index])
                               ? Colors.grey.shade800
                               : null,
                       onLongPress: () {
-                        // changeListTileState(index);
                         boolNotifier.changeListTileState(index);
                       },
                       onTap: () {
                         if (boolNotifier.tileClicked.contains(true)) {
-                          // changeListTileState(index);
                           boolNotifier.changeListTileState(index);
 
                           List itemsContainingTrue = [];
