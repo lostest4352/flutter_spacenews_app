@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
+import 'package:flutter_api_1/pages/list_page.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -34,7 +35,18 @@ class _MyHomeState extends State<MyHome> {
               Card(
                 child: (selectedItems.isNotEmpty)
                     ? ListTile(
-                        title: Text("${selectedItems.length} items selected"))
+                        title: Text("${selectedItems.length} items selected"),
+                        trailing: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return ListPage(selectedLength: selectedItems.length,);
+                              },
+                            ));
+                          },
+                          icon: const Icon(Icons.arrow_circle_right),
+                        ),
+                      )
                     : null,
               ),
               Expanded(
