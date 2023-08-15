@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ListPage extends StatefulWidget {
-  final int selectedLength;
+  final List selectedItems;
+  
   const ListPage({
     Key? key,
-    required this.selectedLength,
+    required this.selectedItems,
+    
   }) : super(key: key);
 
   @override
@@ -21,7 +23,8 @@ class _ListPageState extends State<ListPage> {
       body: Column(
         children: [
           ListTile(
-            title: Text("${widget.selectedLength.toString()} items selected"),
+            title: Text("${widget.selectedItems.length.toString()} items selected"),
+            subtitle: Text(widget.selectedItems.toString()),
           ),
         ],
       ),

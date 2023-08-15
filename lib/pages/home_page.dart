@@ -43,7 +43,7 @@ class _MyHomeState extends State<MyHome> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return ListPage(
-                                    selectedLength: selectedItems.length,
+                                    selectedItems: selectedItems,
                                   );
                                 },
                               ),
