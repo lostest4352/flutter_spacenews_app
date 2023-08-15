@@ -20,6 +20,7 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         title: const Text("My App"),
       ),
+      drawer: Drawer(),
       body: ListenableBuilder(
         listenable: boolNotifier,
         builder: (context, child) {
