@@ -21,9 +21,8 @@ class _ListPageState extends State<ListPage> {
       body: Column(
         children: [
           ListTile(
-            title: Text(widget.selectedLength.toString()),
+            title: Text("${widget.selectedLength.toString()} items selected"),
           ),
-
         ],
       ),
     );

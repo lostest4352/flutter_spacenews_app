@@ -38,13 +38,17 @@ class _MyHomeState extends State<MyHome> {
                         title: Text("${selectedItems.length} items selected"),
                         trailing: IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) {
-                                return ListPage(selectedLength: selectedItems.length,);
-                              },
-                            ));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ListPage(
+                                    selectedLength: selectedItems.length,
+                                  );
+                                },
+                              ),
+                            );
                           },
-                          icon: const Icon(Icons.arrow_circle_right),
+                          icon: const Icon(Icons.arrow_forward),
                         ),
                       )
                     : null,
