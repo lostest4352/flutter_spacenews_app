@@ -63,7 +63,7 @@ class _MyHomeState extends State<MyHome> {
                       // tileClicked.value = List.filled(5, false);
 
                       // Longer form of above code
-                      List<bool> listTileBool = [];
+                      List<bool> listTileBool = [];                     
                       for (int i = 0; i < 5; i++) {
                         listTileBool.add(false);
                         boolNotifier.tileClicked = listTileBool;
@@ -73,7 +73,8 @@ class _MyHomeState extends State<MyHome> {
                     return ListTile(
                       selected: true,
                       selectedTileColor:
-                          (boolNotifier.tileClicked.length > index &&
+                      // > instead of >= if issue
+                          (boolNotifier.tileClicked.length >= index &&
                                   boolNotifier.tileClicked[index])
                               ? Colors.grey.shade800
                               : null,
