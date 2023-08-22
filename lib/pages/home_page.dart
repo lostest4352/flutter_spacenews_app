@@ -20,7 +20,9 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         title: const Text("My App"),
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        width: 230,
+      ),
       body: ListenableBuilder(
         listenable: boolNotifier,
         builder: (context, child) {
@@ -33,6 +35,7 @@ class _MyHomeState extends State<MyHome> {
           }
           return Column(
             children: [
+              // TODO add select/unselect all option
               Card(
                 child: (selectedItems.isNotEmpty)
                     ? ListTile(
@@ -60,7 +63,7 @@ class _MyHomeState extends State<MyHome> {
                   itemBuilder: (context, index) {
                     // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                     if (boolNotifier.tileClicked.isEmpty) {
-                      // tileClicked.value = List.filled(5, false);
+                      // boolNotifier.tileClicked = List.filled(5, false);
 
                       // Longer form of above code
                       List<bool> listTileBool = [];                     
