@@ -14,13 +14,17 @@ class _MyHomeState extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    //
+    Color selectedColor = (theme.brightness == Brightness.dark)
+        ? Colors.grey.shade800
+        : Colors.blueGrey.shade100;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("My App"),
       ),
-      drawer: Drawer(
-        width: 230,
-      ),
+      drawer: Drawer(),
       body: ListenableBuilder(
         listenable: boolNotifier,
         builder: (context, child) {
@@ -85,7 +89,8 @@ class _MyHomeState extends State<MyHome> {
                           // > instead of >= if issue
                           (boolNotifier.tileClicked.length >= index &&
                                   boolNotifier.tileClicked[index])
-                              ? Colors.grey.shade800
+                              // ? Colors.grey.shade800
+                              ? selectedColor
                               : null,
                       onLongPress: () {
                         boolNotifier.changeListTileState(index);
@@ -107,8 +112,11 @@ class _MyHomeState extends State<MyHome> {
                       title: const Text("title"),
                       subtitle: const Text("subtitle"),
                       leading: CircleAvatar(
-                        backgroundColor: Colors.purple.shade800,
-                        child: Text((index + 1).toString()),
+                        backgroundColor: Colors.blue.shade800,
+                        child: Text(
+                          (index + 1).toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     );
                   },

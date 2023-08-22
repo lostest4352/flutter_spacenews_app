@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: FlexThemeData.light(
           scheme: FlexScheme.mandyRed,
-          // primary: Colors.black,
-          // appBarBackground: Colors.red
+          primary: Colors.red.shade900,
         ),
         darkTheme: FlexThemeData.dark(
           scheme: FlexScheme.mandyRed,
