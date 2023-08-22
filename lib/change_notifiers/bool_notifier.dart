@@ -7,4 +7,13 @@ class BoolNotifier extends ChangeNotifier {
     tileClicked[index] = !tileClicked[index];
     notifyListeners();
   }
+
+  void changeAllTileState() {
+    if (tileClicked.contains(false)) {
+      tileClicked = List.filled(tileClicked.length, true);
+    } else {
+      tileClicked = List.filled(tileClicked.length, false);
+    }
+    notifyListeners();
+  }
 }
