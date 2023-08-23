@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
+import 'package:flutter_api_1/pages/news_page.dart';
 
 import '../data/json_data.dart';
 
@@ -92,84 +93,94 @@ class _MyHomeState extends State<MyHome> {
               ),
               Expanded(
                 child: FutureBuilder(
-                    future: jsonFuture,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator(),);
-                      }
-                      if (snapshot.hasError) {
-                        debugPrint(snapshot.error.toString());
-                        return const Center(
-                          child: Text("Something went wrong"),
-                        );
-                      }
-                      return ListView.separated(
-                        separatorBuilder: (context, index) {
-                          return const Divider();
-                        },
-                        cacheExtent: 5,
-                        itemCount: snapshot.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                          if (boolNotifier.tileClicked.isEmpty) {
-                            // boolNotifier.tileClicked = List.filled(5, false);
-
-                            // Longer form of above code
-                            List<bool> listTileBool = [];
-                            for (int i = 0;
-                                i < (snapshot.data?.length ?? 0);
-                                i++) {
-                              listTileBool.add(false);
-                              boolNotifier.tileClicked = listTileBool;
-                            }
-                          }
-
-                          return ListTile(
-                            selected: true,
-                            selectedTileColor:
-                                // > instead of >= if issue
-                                (boolNotifier.tileClicked.length >= index &&
-                                        boolNotifier.tileClicked[index])
-                                    // ? Colors.grey.shade800
-                                    ? selectedColor
-                                    : null,
-                            onLongPress: () {
-                              boolNotifier.changeListTileState(index);
-                            },
-                            onTap: () {
-                              if (boolNotifier.tileClicked.contains(true)) {
-                                boolNotifier.changeListTileState(index);
-
-                                List itemsContainingTrue = [];
-                                for (final boolItem
-                                    in boolNotifier.tileClicked) {
-                                  if (boolItem == true) {
-                                    itemsContainingTrue.add(boolItem);
-                                  }
-                                }
-                                debugPrint(
-                                    "selected items length: ${itemsContainingTrue.length.toString()}");
-                              }
-                            },
-                            title:
-                                Text(snapshot.data?[index].title ?? "no data"),
-                            subtitle: Text(
-                              snapshot.data?[index].body ?? "no data",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.blue.shade800,
-                              child: Text(
-                                // (index + 1).toString(),
-                                snapshot.data?[index].id.toString() ??
-                                    "no data",
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          );
-                        },
+                  future: jsonFuture,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }),
+                    }
+                    if (snapshot.hasError) {
+                      debugPrint(snapshot.error.toString());
+                      return const Center(
+                        child: Text("Something went wrong"),
+                      );
+                    }
+                    return ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                      cacheExtent: 5,
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
+                        if (boolNotifier.tileClicked.isEmpty) {
+                          // boolNotifier.tileClicked = List.filled(5, false);
+
+                          // Longer form of above code
+                          List<bool> listTileBool = [];
+                          for (int i = 0;
+                              i < (snapshot.data?.length ?? 0);
+                              i++) {
+                            listTileBool.add(false);
+                            boolNotifier.tileClicked = listTileBool;
+                          }
+                        }
+
+                        return ListTile(
+                          selected: true,
+                          selectedTileColor:
+                              // > instead of >= if issue
+                              (boolNotifier.tileClicked.length >= index &&
+                                      boolNotifier.tileClicked[index])
+                                  // ? Colors.grey.shade800
+                                  ? selectedColor
+                                  : null,
+                          onLongPress: () {
+                            boolNotifier.changeListTileState(index);
+                          },
+                          onTap: () {
+                            if (boolNotifier.tileClicked.contains(true)) {
+                              boolNotifier.changeListTileState(index);
+
+                              List itemsContainingTrue = [];
+                              for (final boolItem in boolNotifier.tileClicked) {
+                                if (boolItem == true) {
+                                  itemsContainingTrue.add(boolItem);
+                                }
+                              }
+                              debugPrint(
+                                  "selected items length: ${itemsContainingTrue.length.toString()}");
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return NewsPage(
+                                        posts: snapshot.data?[index] as Posts);
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          title: Text(snapshot.data?[index].title ?? "no data"),
+                          subtitle: Text(
+                            snapshot.data?[index].body ?? "no data",
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.blue.shade800,
+                            child: Text(
+                              // (index + 1).toString(),
+                              snapshot.data?[index].id.toString() ?? "no data",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               )
             ],
           );
