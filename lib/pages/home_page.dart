@@ -94,14 +94,14 @@ class _MyHomeState extends State<MyHome> {
                 child: FutureBuilder(
                     future: jsonFuture,
                     builder: (context, snapshot) {
-                      // if (!snapshot.hasData) {
-                      //   return Center(child: CircularProgressIndicator(),);
-                      // }
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator(),);
+                      }
                       if (snapshot.hasError) {
-                        return Center(
-                          child: SelectableText(snapshot.error.toString()),
+                        debugPrint(snapshot.error.toString());
+                        return const Center(
+                          child: Text("Something went wrong"),
                         );
-                        // throw Exception(snapshot.error);
                       }
                       return ListView.separated(
                         separatorBuilder: (context, index) {
