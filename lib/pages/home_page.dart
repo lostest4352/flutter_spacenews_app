@@ -49,7 +49,8 @@ class _MyHomeState extends State<MyHome> {
                               ? const Icon(Icons.check_box_outline_blank)
                               : const Icon(Icons.check_box_outlined),
                         ),
-                        title: Text("${selectedItems.length} items selected"),
+                        title: const Text("Select/Unselect All"),
+                        subtitle: Text("${selectedItems.length} items selected"),
                         trailing: IconButton(
                           onPressed: () {
                             Navigator.of(context).push(
