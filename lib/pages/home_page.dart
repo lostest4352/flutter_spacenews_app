@@ -116,7 +116,9 @@ class _MyHomeState extends State<MyHome> {
 
                             // Longer form of above code
                             List<bool> listTileBool = [];
-                            for (int i = 0; i < 50; i++) {
+                            for (int i = 0;
+                                i < (snapshot.data?.length ?? 0);
+                                i++) {
                               listTileBool.add(false);
                               boolNotifier.tileClicked = listTileBool;
                             }
@@ -159,7 +161,8 @@ class _MyHomeState extends State<MyHome> {
                               backgroundColor: Colors.blue.shade800,
                               child: Text(
                                 // (index + 1).toString(),
-                                snapshot.data?[index].id.toString() ?? "no data",
+                                snapshot.data?[index].id.toString() ??
+                                    "no data",
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),

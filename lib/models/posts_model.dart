@@ -32,13 +32,5 @@ class Posts {
 
   String toJson() => json.encode(toMap());
 
-  // factory Posts.fromJson(String source) => Posts.fromMap(json.decode(source));
-  factory Posts.fromJson(Map<String, dynamic> map) {
-    return Posts(
-      userId: map['userId'],
-      id: map['id'],
-      title: map['title'],
-      body: map['body'],
-    );
-  }
+  factory Posts.fromJson(String source) => Posts.fromMap(json.decode(source));
 }

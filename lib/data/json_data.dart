@@ -19,10 +19,9 @@ Future<List<Posts>> getListFromJson() async {
   final response = await http.get(url);
   List<Posts> postsList = [];
   if (response.statusCode == 200) {
-    
     List jsonResponses = jsonDecode(response.body);
     for (final jsonResponse in jsonResponses) {
-      final singleResponse = Posts.fromJson(jsonResponse);
+      final singleResponse = Posts.fromMap(jsonResponse);
       postsList.add(singleResponse);
     }
     return postsList;
