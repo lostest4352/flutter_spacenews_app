@@ -26,12 +26,24 @@ class _NewsPageState extends State<NewsPage> {
             const SizedBox(
               height: 15,
             ),
-            Card(
-              child: Text(widget.posts.title),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                widget.posts.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
             ),
-            const Divider(),
-            Card(
-              child: Text(widget.posts.body),
+            const Divider(
+              height: 25,
+            ),
+            Container(
+              margin: const EdgeInsets.all(8),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  child: Text(widget.posts.body),
+                ),
+              ),
             ),
           ],
         ),
