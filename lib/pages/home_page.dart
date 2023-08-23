@@ -12,13 +12,13 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   final boolNotifier = BoolNotifier();
 
-  ScrollController scrollController = ScrollController();
+  // ScrollController scrollController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    // scrollController = ScrollController()..addListener(_scrollListener);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // scrollController = ScrollController()..addListener(_scrollListener);
+  // }
 
   @override
   Widget build(BuildContext context) {
