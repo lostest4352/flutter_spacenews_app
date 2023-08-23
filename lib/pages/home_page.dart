@@ -12,6 +12,14 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   final boolNotifier = BoolNotifier();
 
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    // scrollController = ScrollController()..addListener(_scrollListener);
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -50,7 +58,8 @@ class _MyHomeState extends State<MyHome> {
                               : const Icon(Icons.check_box_outlined),
                         ),
                         title: const Text("Select/Unselect All"),
-                        subtitle: Text("${selectedItems.length} items selected"),
+                        subtitle:
+                            Text("${selectedItems.length} items selected"),
                         trailing: IconButton(
                           onPressed: () {
                             Navigator.of(context).push(
@@ -69,8 +78,12 @@ class _MyHomeState extends State<MyHome> {
                     : null,
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 5,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return const Divider();
+                  },
+                  cacheExtent: 5,
+                  itemCount: 50,
                   itemBuilder: (context, index) {
                     // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                     if (boolNotifier.tileClicked.isEmpty) {
@@ -78,7 +91,7 @@ class _MyHomeState extends State<MyHome> {
 
                       // Longer form of above code
                       List<bool> listTileBool = [];
-                      for (int i = 0; i < 5; i++) {
+                      for (int i = 0; i < 50; i++) {
                         listTileBool.add(false);
                         boolNotifier.tileClicked = listTileBool;
                       }
