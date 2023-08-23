@@ -135,6 +135,7 @@ class _MyHomeState extends State<MyHome> {
                             selected: true,
                             selectedTileColor:
                                 // > instead of >= if issue
+                                // total length of the tileClicked list which has either true or false and never null
                                 (boolNotifier.tileClicked.length >= index &&
                                         boolNotifier.tileClicked[index])
                                     // ? Colors.grey.shade800
