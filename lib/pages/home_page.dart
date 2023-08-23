@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
 
+import '../data/json_data.dart';
+
+import '../models/posts_model.dart';
+
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
 
@@ -19,6 +23,15 @@ class _MyHomeState extends State<MyHome> {
   //   super.initState();
   //   // scrollController = ScrollController()..addListener(_scrollListener);
   // }
+
+  late Future<List<Posts>> jsonFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    jsonFuture = getListFromJson();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,63 +91,82 @@ class _MyHomeState extends State<MyHome> {
                     : null,
               ),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                  cacheExtent: 5,
-                  itemCount: 50,
-                  itemBuilder: (context, index) {
-                    // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                    if (boolNotifier.tileClicked.isEmpty) {
-                      // boolNotifier.tileClicked = List.filled(5, false);
-
-                      // Longer form of above code
-                      List<bool> listTileBool = [];
-                      for (int i = 0; i < 50; i++) {
-                        listTileBool.add(false);
-                        boolNotifier.tileClicked = listTileBool;
+                child: FutureBuilder(
+                    future: jsonFuture,
+                    builder: (context, snapshot) {
+                      // if (!snapshot.hasData) {
+                      //   return Center(child: CircularProgressIndicator(),);
+                      // }
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: SelectableText(snapshot.error.toString()),
+                        );
+                        // throw Exception(snapshot.error);
                       }
-                    }
+                      return ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return const Divider();
+                        },
+                        cacheExtent: 5,
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
+                          if (boolNotifier.tileClicked.isEmpty) {
+                            // boolNotifier.tileClicked = List.filled(5, false);
 
-                    return ListTile(
-                      selected: true,
-                      selectedTileColor:
-                          // > instead of >= if issue
-                          (boolNotifier.tileClicked.length >= index &&
-                                  boolNotifier.tileClicked[index])
-                              // ? Colors.grey.shade800
-                              ? selectedColor
-                              : null,
-                      onLongPress: () {
-                        boolNotifier.changeListTileState(index);
-                      },
-                      onTap: () {
-                        if (boolNotifier.tileClicked.contains(true)) {
-                          boolNotifier.changeListTileState(index);
-
-                          List itemsContainingTrue = [];
-                          for (final boolItem in boolNotifier.tileClicked) {
-                            if (boolItem == true) {
-                              itemsContainingTrue.add(boolItem);
+                            // Longer form of above code
+                            List<bool> listTileBool = [];
+                            for (int i = 0; i < 50; i++) {
+                              listTileBool.add(false);
+                              boolNotifier.tileClicked = listTileBool;
                             }
                           }
-                          debugPrint(
-                              "selected items length: ${itemsContainingTrue.length.toString()}");
-                        }
-                      },
-                      title: const Text("title"),
-                      subtitle: const Text("subtitle"),
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.blue.shade800,
-                        child: Text(
-                          (index + 1).toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+
+                          return ListTile(
+                            selected: true,
+                            selectedTileColor:
+                                // > instead of >= if issue
+                                (boolNotifier.tileClicked.length >= index &&
+                                        boolNotifier.tileClicked[index])
+                                    // ? Colors.grey.shade800
+                                    ? selectedColor
+                                    : null,
+                            onLongPress: () {
+                              boolNotifier.changeListTileState(index);
+                            },
+                            onTap: () {
+                              if (boolNotifier.tileClicked.contains(true)) {
+                                boolNotifier.changeListTileState(index);
+
+                                List itemsContainingTrue = [];
+                                for (final boolItem
+                                    in boolNotifier.tileClicked) {
+                                  if (boolItem == true) {
+                                    itemsContainingTrue.add(boolItem);
+                                  }
+                                }
+                                debugPrint(
+                                    "selected items length: ${itemsContainingTrue.length.toString()}");
+                              }
+                            },
+                            title:
+                                Text(snapshot.data?[index].title ?? "no data"),
+                            subtitle: Text(
+                              snapshot.data?[index].body ?? "no data",
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.blue.shade800,
+                              child: Text(
+                                // (index + 1).toString(),
+                                snapshot.data?[index].id.toString() ?? "no data",
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
               )
             ],
           );
