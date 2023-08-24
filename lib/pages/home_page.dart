@@ -118,7 +118,7 @@ class _MyHomeState extends State<MyHome> {
                         itemCount: snapshot.data?.length ?? 0,
                         itemBuilder: (context, index) {
                           // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                          // This is where list is made so before this list is to be empty and after this it will not be null
+                          // This is where list is made so before this list is to be empty
                           if (boolNotifier.tileClicked.isEmpty) {
                             // boolNotifier.tileClicked = List.filled(5, false);
                     
@@ -136,7 +136,7 @@ class _MyHomeState extends State<MyHome> {
                             selected: true,
                             selectedTileColor:
                                 // > instead of >= if issue
-                                // total length of the tileClicked list which has either true or false and never null
+                                // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
                                 (boolNotifier.tileClicked.length >= index &&
                                         boolNotifier.tileClicked[index])
                                     // ? Colors.grey.shade800
