@@ -5,9 +5,7 @@ import 'package:flutter_api_1/models/news_model.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
 import 'package:flutter_api_1/pages/news_page.dart';
 
-import '../data/json_data.dart';
 
-import '../models/posts_model.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -27,7 +25,7 @@ class _MyHomeState extends State<MyHome> {
   //   // scrollController = ScrollController()..addListener(_scrollListener);
   // }
 
-  late Future<List<Posts>> jsonFuture;
+  // late Future<List<Posts>> jsonFuture;
 
   late Future<List<News>> newsFromApi;
 
@@ -35,7 +33,7 @@ class _MyHomeState extends State<MyHome> {
   void initState() {
     super.initState();
 
-    jsonFuture = getListFromJson();
+    // jsonFuture = getListFromJson();
 
     newsFromApi = getListFromNews();
   }
