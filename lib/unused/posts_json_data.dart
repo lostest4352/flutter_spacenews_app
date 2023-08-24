@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_api_1/models/posts_model.dart';
+import 'package:flutter_api_1/unused/posts_model.dart';
 import 'package:http/http.dart' as http;
 
 // Future<Posts> getDataFromJson() async {
