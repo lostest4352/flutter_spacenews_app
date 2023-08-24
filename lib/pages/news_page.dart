@@ -17,7 +17,7 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Article no: ${widget.news.title}"),
+        title: Text(widget.news.title),
       ),
       body: Center(
         child: Column(
@@ -36,7 +36,10 @@ class _NewsPageState extends State<NewsPage> {
             const Divider(
               height: 25,
             ),
-            Image.network(widget.news.urlToImage),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(widget.news.urlToImage),
+            ),
             InteractiveViewer(
               child: Container(
                 margin: const EdgeInsets.all(8),
