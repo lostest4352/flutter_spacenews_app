@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
+import 'package:flutter_api_1/data/news_api_data.dart';
+import 'package:flutter_api_1/models/news_model.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
 import 'package:flutter_api_1/pages/news_page.dart';
 
@@ -27,11 +29,15 @@ class _MyHomeState extends State<MyHome> {
 
   late Future<List<Posts>> jsonFuture;
 
+  late Future<List<News>> newsFromApi;
+
   @override
   void initState() {
     super.initState();
 
     jsonFuture = getListFromJson();
+
+    newsFromApi = getListFromNews();
   }
 
   @override
@@ -93,22 +99,23 @@ class _MyHomeState extends State<MyHome> {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: jsonFuture,
+                  future: newsFromApi,
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+                    // if (!snapshot.hasData) {
+                    //   return const Center(
+                    //     child: CircularProgressIndicator(),
+                    //   );
+                    // }
                     if (snapshot.hasError) {
                       debugPrint(snapshot.error.toString());
-                      return const Center(
-                        child: Text("Something went wrong"),
+                      return Center(
+                        child: Text(snapshot.error.toString()),
                       );
                     }
                     return RefreshIndicator(
                       onRefresh: () {
-                        return getListFromJson();
+                        // return getListFromJson();
+                        return getListFromNews();
                       },
                       child: ListView.separated(
                         separatorBuilder: (context, index) {
@@ -121,7 +128,7 @@ class _MyHomeState extends State<MyHome> {
                           // This is where list is made so before this list is to be empty
                           if (boolNotifier.tileClicked.isEmpty) {
                             // boolNotifier.tileClicked = List.filled(5, false);
-                    
+
                             // Longer form of above code
                             List<bool> listTileBool = [];
                             for (int i = 0;
@@ -131,7 +138,7 @@ class _MyHomeState extends State<MyHome> {
                               boolNotifier.tileClicked = listTileBool;
                             }
                           }
-                    
+
                           return ListTile(
                             selected: true,
                             selectedTileColor:
@@ -148,9 +155,10 @@ class _MyHomeState extends State<MyHome> {
                             onTap: () {
                               if (boolNotifier.tileClicked.contains(true)) {
                                 boolNotifier.changeListTileState(index);
-                    
+
                                 List itemsContainingTrue = [];
-                                for (final boolItem in boolNotifier.tileClicked) {
+                                for (final boolItem
+                                    in boolNotifier.tileClicked) {
                                   if (boolItem == true) {
                                     itemsContainingTrue.add(boolItem);
                                   }
@@ -163,24 +171,27 @@ class _MyHomeState extends State<MyHome> {
                                   MaterialPageRoute(
                                     builder: (context) {
                                       return NewsPage(
-                                          posts: snapshot.data?[index] as Posts);
+                                          news: snapshot.data?[index] as News);
                                     },
                                   ),
                                 );
                               }
                             },
-                            title: Text(snapshot.data?[index].title ?? "no data"),
+                            title:
+                                Text(snapshot.data?[index].title ?? "no data"),
                             subtitle: Text(
-                              snapshot.data?[index].body ?? "no data",
+                              snapshot.data?[index].description ?? "no data",
                               overflow: TextOverflow.ellipsis,
                             ),
                             leading: CircleAvatar(
-                              backgroundColor: Colors.blue.shade800,
-                              child: Text(
-                                // (index + 1).toString(),
-                                snapshot.data?[index].id.toString() ?? "no data",
-                                style: const TextStyle(color: Colors.white),
-                              ),
+                              // backgroundColor: Colors.blue.shade800,
+                              // child: Text(
+                              //   // (index + 1).toString(),
+                              //   snapshot.data?[index].id.toString() ?? "no data",
+                              //   style: const TextStyle(color: Colors.white),
+                              // ),
+                              backgroundImage: NetworkImage(
+                                  snapshot.data?[index].urlToImage ?? ""),
                             ),
                           );
                         },

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_api_1/models/posts_model.dart';
+import 'package:flutter_api_1/models/news_model.dart';
 
 class NewsPage extends StatefulWidget {
-  final Posts posts;
+  final News news;
   const NewsPage({
     Key? key,
-    required this.posts,
+    required this.news,
   }) : super(key: key);
 
   @override
@@ -18,7 +17,7 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Article no: ${widget.posts.id}"),
+        title: Text("Article no: ${widget.news.title}"),
       ),
       body: Center(
         child: Column(
@@ -29,19 +28,21 @@ class _NewsPageState extends State<NewsPage> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: SelectableText(
-                widget.posts.title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                "Author: ${widget.news.author}",
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
             const Divider(
               height: 25,
             ),
+            Image.network(widget.news.urlToImage),
             InteractiveViewer(
               child: Container(
                 margin: const EdgeInsets.all(8),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(widget.posts.body),
+                  child: SelectableText(widget.news.description),
                 ),
               ),
             ),
