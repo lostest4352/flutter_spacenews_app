@@ -5,8 +5,6 @@ import 'package:flutter_api_1/models/news_model.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
 import 'package:flutter_api_1/pages/news_page.dart';
 
-
-
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
 
@@ -28,6 +26,7 @@ class _MyHomeState extends State<MyHome> {
   // late Future<List<Posts>> jsonFuture;
 
   late Future<List<News>> newsFromApi;
+  late Future<List<String>> newsAuthorsFromApi;
 
   @override
   void initState() {
@@ -35,7 +34,8 @@ class _MyHomeState extends State<MyHome> {
 
     // jsonFuture = getListFromJson();
 
-    newsFromApi = getListFromNews();
+    newsAuthorsFromApi = getListFromNews().then((value) => value.$2);
+    newsFromApi = getListFromNews().then((value) => value.$1);
   }
 
   @override
@@ -97,7 +97,7 @@ class _MyHomeState extends State<MyHome> {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: newsFromApi,
+                  future: newsAuthorsFromApi,
                   builder: (context, snapshot) {
                     // if (!snapshot.hasData) {
                     //   return const Center(
@@ -137,61 +137,74 @@ class _MyHomeState extends State<MyHome> {
                             }
                           }
 
-                          return ListTile(
-                            selected: true,
-                            selectedTileColor:
-                                // > instead of >= if issue
-                                // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
-                                (boolNotifier.tileClicked.length >= index &&
-                                        boolNotifier.tileClicked[index])
-                                    // ? Colors.grey.shade800
-                                    ? selectedColor
-                                    : null,
-                            onLongPress: () {
-                              boolNotifier.changeListTileState(index);
-                            },
-                            onTap: () {
-                              if (boolNotifier.tileClicked.contains(true)) {
-                                boolNotifier.changeListTileState(index);
-
-                                List itemsContainingTrue = [];
-                                for (final boolItem
-                                    in boolNotifier.tileClicked) {
-                                  if (boolItem == true) {
-                                    itemsContainingTrue.add(boolItem);
-                                  }
+                          return FutureBuilder(
+                              future: newsFromApi,
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
                                 }
-                                debugPrint(
-                                    "selected items length: ${itemsContainingTrue.length.toString()}");
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return NewsPage(
-                                          news: snapshot.data?[index] as News);
-                                    },
+                                return ListTile(
+                                  selected: true,
+                                  selectedTileColor:
+                                      // > instead of >= if issue
+                                      // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
+                                      (boolNotifier.tileClicked.length >=
+                                                  index &&
+                                              boolNotifier.tileClicked[index])
+                                          // ? Colors.grey.shade800
+                                          ? selectedColor
+                                          : null,
+                                  onLongPress: () {
+                                    boolNotifier.changeListTileState(index);
+                                  },
+                                  onTap: () {
+                                    if (boolNotifier.tileClicked
+                                        .contains(true)) {
+                                      boolNotifier.changeListTileState(index);
+
+                                      List itemsContainingTrue = [];
+                                      for (final boolItem
+                                          in boolNotifier.tileClicked) {
+                                        if (boolItem == true) {
+                                          itemsContainingTrue.add(boolItem);
+                                        }
+                                      }
+                                      debugPrint(
+                                          "selected items length: ${itemsContainingTrue.length.toString()}");
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return NewsPage(
+                                                news: snapshot.data?[index]
+                                                    as News);
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  title: Text(
+                                      snapshot.data?[index].title ?? "no data"),
+                                  subtitle: Text(
+                                    snapshot.data?[index].description ??
+                                        "no data",
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  leading: CircleAvatar(
+                                    // backgroundColor: Colors.blue.shade800,
+                                    // child: Text(
+                                    //   // (index + 1).toString(),
+                                    //   snapshot.data?[index].id.toString() ?? "no data",
+                                    //   style: const TextStyle(color: Colors.white),
+                                    // ),
+                                    backgroundImage: NetworkImage(
+                                        snapshot.data?[index].urlToImage ?? ""),
                                   ),
                                 );
-                              }
-                            },
-                            title:
-                                Text(snapshot.data?[index].title ?? "no data"),
-                            subtitle: Text(
-                              snapshot.data?[index].description ?? "no data",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            leading: CircleAvatar(
-                              // backgroundColor: Colors.blue.shade800,
-                              // child: Text(
-                              //   // (index + 1).toString(),
-                              //   snapshot.data?[index].id.toString() ?? "no data",
-                              //   style: const TextStyle(color: Colors.white),
-                              // ),
-                              backgroundImage: NetworkImage(
-                                  snapshot.data?[index].urlToImage ?? ""),
-                            ),
-                          );
+                              });
                         },
                       ),
                     );
