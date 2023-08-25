@@ -16,7 +16,7 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   String formatTimestamp(String timestamp) {
     final inputFormat = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'");
-    final outputFormat = DateFormat("yyyy-MM-dd 'at' HH:mm");
+    final outputFormat = DateFormat("yyyy-MM-dd 'at' HH:mm a");
 
     final parsedDate = inputFormat.parse(timestamp);
     return outputFormat.format(parsedDate);

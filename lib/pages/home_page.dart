@@ -16,13 +16,12 @@ class _MyHomeState extends State<MyHome> {
   final boolNotifier = BoolNotifier();
 
   late Future<List<News>> newsFromApi;
-  late Future<List<int>> newsAuthorsFromApi;
+  late Future<List<int>> newsLength;
 
   @override
   void initState() {
     super.initState();
-
-    newsAuthorsFromApi = getListFromNews().then((value) => value.$2);
+    newsLength = getListFromNews().then((value) => value.$2);
     newsFromApi = getListFromNews().then((value) => value.$1);
   }
 
@@ -85,7 +84,7 @@ class _MyHomeState extends State<MyHome> {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: newsAuthorsFromApi,
+                  future: newsLength,
                   builder: (context, snapshot) {
                     // if (!snapshot.hasData) {
                     //   return const Center(
