@@ -26,7 +26,7 @@ class _MyHomeState extends State<MyHome> {
   // late Future<List<Posts>> jsonFuture;
 
   late Future<List<News>> newsFromApi;
-  late Future<List<String>> newsAuthorsFromApi;
+  late Future<List<int>> newsAuthorsFromApi;
 
   @override
   void initState() {
