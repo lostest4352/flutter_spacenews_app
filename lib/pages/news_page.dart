@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/models/news_model.dart';
+import 'package:intl/intl.dart';
 
 class NewsPage extends StatefulWidget {
   final News news;
@@ -13,11 +14,21 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  String formatTimestamp(String timestamp) {
+    final inputFormat = DateFormat("yyyy-MM-ddTHH:mm:ss'Z'");
+    final outputFormat = DateFormat("yyyy-MM-dd 'at' HH:mm");
+
+    final parsedDate = inputFormat.parse(timestamp);
+    return outputFormat.format(parsedDate);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final formattedTime = formatTimestamp(widget.news.publishedAt);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.news.title),
+        title: Text("By: ${widget.news.author}"),
       ),
       body: Center(
         child: Column(
@@ -28,9 +39,16 @@ class _NewsPageState extends State<NewsPage> {
             Padding(
               padding: const EdgeInsets.all(12),
               child: SelectableText(
-                "Author: ${widget.news.author}",
+                widget.news.title,
                 style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Date Published: $formattedTime"),
               ),
             ),
             const Divider(
