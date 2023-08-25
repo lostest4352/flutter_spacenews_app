@@ -38,10 +38,13 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(12),
-              child: SelectableText(
-                widget.news.title,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: SelectableText(
+                  widget.news.title,
+                  style:
+                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
               ),
             ),
             Padding(

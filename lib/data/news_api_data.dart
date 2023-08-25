@@ -9,9 +9,6 @@ Future<(List<News>, List<int>)> getListFromNews() async {
 
   if (response.statusCode == 200) {
     final jsonResponses = jsonDecode(response.body);
-    // List<News> newsList = jsonResponses.map((newsData) {
-    //   return News.fromMap(newsData);
-    // }).toList();
     List<News> allNews = [];
     List<int> articleLength = [];
     final articleResponse = jsonResponses["articles"];
