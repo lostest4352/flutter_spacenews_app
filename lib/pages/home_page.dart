@@ -187,10 +187,14 @@ class _MyHomeState extends State<MyHome> {
                                     }
                                   },
                                   title: Text(
-                                      snapshot.data?[index].title ?? "no data"),
+                                    snapshot.data?[index].title ?? "no data",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                   subtitle: Text(
                                     snapshot.data?[index].description ??
                                         "no data",
+                                    style: const TextStyle(color: Colors.blue),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   leading: CircleAvatar(
