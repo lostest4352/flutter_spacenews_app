@@ -101,94 +101,102 @@ class _MyHomeState extends State<MyHome> {
                       onRefresh: () {
                         return getListFromNews();
                       },
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) {
-                          return const Divider();
-                        },
-                        cacheExtent: 5,
-                        itemCount: snapshot.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
-                          // This is where list is made so before this list is to be empty
-                          if (boolNotifier.tileClicked.isEmpty) {
-                            // boolNotifier.tileClicked = List.filled(5, false);
+                      // Replaced Sliver with Listview if issues happen and remove CustomScrollView
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverList.separated(
+                            separatorBuilder: (context, index) {
+                              return const Divider();
+                            },
+                            itemCount: snapshot.data?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
+                              // This is where list is made so before this list is to be empty
+                              if (boolNotifier.tileClicked.isEmpty) {
+                                // boolNotifier.tileClicked = List.filled(5, false);
 
-                            // Longer form of above code
-                            List<bool> listTileBool = [];
-                            for (int i = 0;
-                                i < (snapshot.data?.length ?? 0);
-                                i++) {
-                              listTileBool.add(false);
-                              boolNotifier.tileClicked = listTileBool;
-                            }
-                          }
-
-                          return FutureBuilder(
-                            future: newsFromApi,
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                                // Longer form of above code
+                                List<bool> listTileBool = [];
+                                for (int i = 0;
+                                    i < (snapshot.data?.length ?? 0);
+                                    i++) {
+                                  listTileBool.add(false);
+                                  boolNotifier.tileClicked = listTileBool;
+                                }
                               }
-                              return ListTile(
-                                selected: true,
-                                selectedTileColor:
-                                    // > instead of >= if issue
-                                    // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
-                                    (boolNotifier.tileClicked.length >= index &&
-                                            boolNotifier.tileClicked[index])
-                                        // ? Colors.grey.shade800
-                                        ? selectedColor
-                                        : null,
-                                onLongPress: () {
-                                  boolNotifier.changeListTileState(index);
-                                },
-                                onTap: () {
-                                  if (boolNotifier.tileClicked.contains(true)) {
-                                    boolNotifier.changeListTileState(index);
 
-                                    List itemsContainingTrue = [];
-                                    for (final boolItem
-                                        in boolNotifier.tileClicked) {
-                                      if (boolItem == true) {
-                                        itemsContainingTrue.add(boolItem);
-                                      }
-                                    }
-                                    debugPrint(
-                                        "selected items length: ${itemsContainingTrue.length.toString()}");
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return NewsPage(
-                                              news: snapshot.data?[index]
-                                                  as News);
-                                        },
-                                      ),
+                              return FutureBuilder(
+                                future: newsFromApi,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
                                     );
                                   }
+                                  return ListTile(
+                                    selected: true,
+                                    selectedTileColor:
+                                        // > instead of >= if issue
+                                        // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
+                                        (boolNotifier.tileClicked.length >=
+                                                    index &&
+                                                boolNotifier.tileClicked[index])
+                                            // ? Colors.grey.shade800
+                                            ? selectedColor
+                                            : null,
+                                    onLongPress: () {
+                                      boolNotifier.changeListTileState(index);
+                                    },
+                                    onTap: () {
+                                      if (boolNotifier.tileClicked
+                                          .contains(true)) {
+                                        boolNotifier.changeListTileState(index);
+
+                                        List itemsContainingTrue = [];
+                                        for (final boolItem
+                                            in boolNotifier.tileClicked) {
+                                          if (boolItem == true) {
+                                            itemsContainingTrue.add(boolItem);
+                                          }
+                                        }
+                                        debugPrint(
+                                            "selected items length: ${itemsContainingTrue.length.toString()}");
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return NewsPage(
+                                                  news: snapshot.data?[index]
+                                                      as News);
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    title: Text(
+                                      snapshot.data?[index].title ?? "no data",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    subtitle: Text(
+                                      snapshot.data?[index].description ??
+                                          "no data",
+                                      style:
+                                          const TextStyle(color: Colors.blue),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    leading: ClipRRect(
+                                      child: Image.network(
+                                          snapshot.data?[index].urlToImage ??
+                                              ""),
+                                    ),
+                                  );
                                 },
-                                title: Text(
-                                  snapshot.data?[index].title ?? "no data",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Text(
-                                  snapshot.data?[index].description ??
-                                      "no data",
-                                  style: const TextStyle(color: Colors.blue),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                leading: ClipRRect(
-                                  child: Image.network(
-                                      snapshot.data?[index].urlToImage ?? ""),
-                                ),
                               );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     );
                   },
