@@ -181,14 +181,8 @@ class _MyHomeState extends State<MyHome> {
                                   style: const TextStyle(color: Colors.blue),
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                leading: CircleAvatar(
-                                  // backgroundColor: Colors.blue.shade800,
-                                  // child: Text(
-                                  //   // (index + 1).toString(),
-                                  //   snapshot.data?[index].id.toString() ?? "no data",
-                                  //   style: const TextStyle(color: Colors.white),
-                                  // ),
-                                  backgroundImage: NetworkImage(
+                                leading: ClipRRect(
+                                  child: Image.network(
                                       snapshot.data?[index].urlToImage ?? ""),
                                 ),
                               );
