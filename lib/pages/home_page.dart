@@ -15,14 +15,14 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   final boolNotifier = BoolNotifier();
 
-  late Future<List<News>> newsFromApi;
+  Future<List<News>> newsFromApi = getListFromNews().then((value) => value.$1);
+  //
   late Future<List<int>> newsLength;
 
   @override
   void initState() {
     super.initState();
     newsLength = getListFromNews().then((value) => value.$2);
-    newsFromApi = getListFromNews().then((value) => value.$1);
   }
 
   @override
