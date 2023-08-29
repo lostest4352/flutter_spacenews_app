@@ -31,7 +31,7 @@ class _NewsPageState extends State<NewsPage> {
         title: Text("By: ${widget.news.author}"),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const SizedBox(
               height: 15,
