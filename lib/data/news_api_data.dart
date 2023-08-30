@@ -8,9 +8,10 @@ Future<(List<News>, List<int>)> getListFromNews() async {
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
-    final jsonResponses = jsonDecode(response.body);
     List<News> allNews = [];
     List<int> articleLength = [];
+    //
+    final jsonResponses = jsonDecode(response.body);
     final articleResponse = jsonResponses["articles"];
     for (final article in articleResponse) {
       final newsValue = News.fromMap(article as Map<String, dynamic>);
