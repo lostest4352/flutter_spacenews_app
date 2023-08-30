@@ -1,10 +1,21 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_api_1/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<News>> getListFromNews() async {
-  final url = Uri.parse("https://api.spaceflightnewsapi.net/v4/articles/?limit=10");
+class SpaceNews extends ChangeNotifier {
+  testd() {
+    notifyListeners();
+  }
+}
+
+Future<List<News>> getListFromNews(int offset) async {
+
+  // int offset = 0;
+  int limit = 10;
+
+  final url = Uri.parse("https://api.spaceflightnewsapi.net/v4/articles/?limit=$limit&offset=$offset");
   final response = await http.get(url);
 
   if (response.statusCode == 200) {

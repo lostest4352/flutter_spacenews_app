@@ -17,10 +17,12 @@ class _MyHomeState extends State<MyHome> {
 
   late Future<List<News>> newsFromApi;
 
+   int offset = 0;
+
   @override
   void initState() {
     super.initState();
-    newsFromApi = getListFromNews();
+    newsFromApi = getListFromNews(offset);
   }
 
   @override
@@ -95,11 +97,16 @@ class _MyHomeState extends State<MyHome> {
                         child: Text(snapshot.error.toString()),
                       );
                     }
-                    // TODO 
-                    int itemlength = snapshot.data?.length ?? 0;
+                    // TODO
+                    int itemlength = (snapshot.data?.length ?? 0);
                     return RefreshIndicator(
-                      onRefresh: () {
-                        return getListFromNews();
+                      onRefresh: () { 
+                        newsFromApi = getListFromNews(offset += 10);
+                        offset = offset+10;
+                        setState(() {
+                          
+                        });
+                        return newsFromApi;
                       },
 
                       // Replaced Sliver with Listview if issues happen and remove CustomScrollView
