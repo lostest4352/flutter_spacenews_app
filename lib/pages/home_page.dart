@@ -33,21 +33,25 @@ class _MyHomeState extends State<MyHome> {
         ? Colors.grey.shade800
         : Colors.blueGrey.shade100;
 
+    // Same as ${(offset / 10).toInt() +1}
+    int pageNo = offset ~/ 10 + 1;
+
     return Scaffold(
       appBar: AppBar(
-        // Same as ${(offset / 10).toInt() +1}
-        title: Text("Page ${offset ~/ 10 + 1}"),
+        title: Text("Page $pageNo"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
-              offset -= 10;
-              newsFromApi = getListFromNews(offset);
-              setState(() {});
+              if (offset > 0) {
+                offset -= 10;
+                newsFromApi = getListFromNews(offset);
+                setState(() {});
+              }
             },
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_forward),
+            icon: const Icon(Icons.arrow_forward_ios),
             onPressed: () {
               offset += 10;
               newsFromApi = getListFromNews(offset);
