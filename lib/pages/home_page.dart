@@ -180,7 +180,7 @@ class _MyHomeState extends State<MyHome> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
-                                      snapshot.data?[index].description ??
+                                      snapshot.data?[index].summary ??
                                           "no data",
                                       style:
                                           const TextStyle(color: Colors.blue),
@@ -188,8 +188,11 @@ class _MyHomeState extends State<MyHome> {
                                     ),
                                     leading: ClipRRect(
                                       child: Image.network(
-                                          snapshot.data?[index].urlToImage ??
-                                              ""),
+                                        snapshot.data?[index].image_url ?? "",
+                                        height: 100,
+                                        width: 80,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   );
                                 },

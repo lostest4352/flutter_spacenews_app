@@ -1,43 +1,54 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 class News {
-  String author;
+  int newsId;
   String title;
-  String description;
   String url;
-  String urlToImage;
-  String publishedAt;
+  String image_url;
+  String news_site;
+  String summary;
+  String published_at;
+  String updated_at;
   String content;
   News({
-    required this.author,
+    required this.newsId,
     required this.title,
-    required this.description,
     required this.url,
-    required this.urlToImage,
-    required this.publishedAt,
+    required this.image_url,
+    required this.news_site,
+    required this.summary,
+    required this.published_at,
+    required this.updated_at,
     required this.content,
   });
+  
 
   Map<String, dynamic> toMap() {
     return {
-      'author': author,
+      'newsId': newsId,
       'title': title,
-      'description': description,
       'url': url,
-      'urlToImage': urlToImage,
-      'publishedAt': publishedAt,
+      'image_url': image_url,
+      'news_site': news_site,
+      'summary': summary,
+      'published_at': published_at,
+      'updated_at': updated_at,
       'content': content,
     };
   }
 
   factory News.fromMap(Map<String, dynamic> map) {
     return News(
-      author: map['author'] ?? '',
+      newsId: map['newsId']?.toInt() ?? 0,
       title: map['title'] ?? '',
-      description: map['description'] ?? '',
       url: map['url'] ?? '',
-      urlToImage: map['urlToImage'] ?? '',
-      publishedAt: map['publishedAt'] ?? '',
+      image_url: map['image_url'] ?? '',
+      news_site: map['news_site'] ?? '',
+      summary: map['summary'] ?? '',
+      published_at: map['published_at'] ?? '',
+      updated_at: map['updated_at'] ?? '',
       content: map['content'] ?? '',
     );
   }

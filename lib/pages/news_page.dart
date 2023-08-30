@@ -24,11 +24,11 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final formattedTime = formatTimestamp(widget.news.publishedAt);
+    final formattedTime = formatTimestamp(widget.news.published_at);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("By: ${widget.news.author}"),
+        title: Text("By: ${widget.news.news_site}"),
       ),
       body: Center(
         child: ListView(
@@ -59,14 +59,14 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(widget.news.urlToImage),
+              child: Image.network(widget.news.image_url),
             ),
             InteractiveViewer(
               child: Container(
                 margin: const EdgeInsets.all(8),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(widget.news.description),
+                  child: SelectableText(widget.news.summary),
                 ),
               ),
             ),
