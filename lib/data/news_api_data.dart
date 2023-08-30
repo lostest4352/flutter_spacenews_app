@@ -11,7 +11,8 @@ Future<(List<News>, List<int>)> getListFromNews() async {
     List<News> allNews = [];
     List<int> articleLength = [];
     //
-    final jsonResponses = jsonDecode(response.body);
+    final jsonResponses = jsonDecode(utf8.decode(response.bodyBytes));
+
     final articleResponse = jsonResponses["results"];
     for (final article in articleResponse) {
       final newsValue = News.fromMap(article as Map<String, dynamic>);
