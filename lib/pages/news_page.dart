@@ -34,7 +34,7 @@ class _NewsPageState extends State<NewsPage> {
         child: ListView(
           children: [
             const SizedBox(
-              height: 15,
+              height: 5,
             ),
             Padding(
               padding: const EdgeInsets.all(12),
@@ -48,10 +48,24 @@ class _NewsPageState extends State<NewsPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12),
+              padding: const EdgeInsets.only(left: 12, bottom: 8),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Date Published: $formattedTime"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              child: Center(
+                child: Wrap(
+                  children: [
+                    const Text("News link:"),
+                    SelectableText(
+                      widget.news.url,
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
               ),
             ),
             const Divider(
@@ -66,23 +80,6 @@ class _NewsPageState extends State<NewsPage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SelectableText(widget.news.summary),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                child: Center(
-                  child: Wrap(
-                    children: [
-                      const Text("News link:"),
-                      SelectableText(
-                        widget.news.url,
-                        style: const TextStyle(color: Colors.blue),
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
           ],

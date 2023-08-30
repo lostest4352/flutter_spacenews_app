@@ -36,16 +36,24 @@ class _MyHomeState extends State<MyHome> {
     return Scaffold(
       appBar: AppBar(
         // Same as ${(offset / 10).toInt() +1}
-        title: Text("Page ${offset ~/ 10 +1}"),
+        title: Text("Page ${offset ~/ 10 + 1}"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              newsFromApi = getListFromNews(0);
-              offset = 0;
+              offset -= 10;
+              newsFromApi = getListFromNews(offset);
               setState(() {});
             },
-          )
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward),
+            onPressed: () {
+              offset += 10;
+              newsFromApi = getListFromNews(offset);
+              setState(() {});
+            },
+          ),
         ],
       ),
       drawer: Drawer(),
@@ -112,7 +120,7 @@ class _MyHomeState extends State<MyHome> {
                     int itemlength = (snapshot.data?.length ?? 0);
                     return RefreshIndicator(
                       onRefresh: () {
-                        offset += 10;
+                        offset = 0;
                         newsFromApi = getListFromNews(offset);
                         debugPrint(offset.toString());
                         setState(() {});
