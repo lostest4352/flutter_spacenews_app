@@ -26,6 +26,11 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     // final formattedTime = formatTimestamp(widget.news.published_at);
 
+    String publishedDate = widget.news.published_at;
+
+    String dateString = publishedDate.substring(0, 10);
+    String timeString = publishedDate.substring(11, 16);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("By: ${widget.news.news_site}"),
@@ -53,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Date Published: ${widget.news.published_at}",
+                  "Date Published: $dateString at $timeString",
                   style: const TextStyle(
                       fontStyle: FontStyle.italic, fontSize: 13),
                 ),
