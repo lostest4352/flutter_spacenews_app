@@ -17,7 +17,7 @@ class _MyHomeState extends State<MyHome> {
 
   late Future<List<News>> newsFromApi;
 
-   int offset = 0;
+  int offset = 0;
 
   @override
   void initState() {
@@ -35,7 +35,17 @@ class _MyHomeState extends State<MyHome> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My App"),
+        title: Text("Page ${offset ~/ 10 +1}"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              newsFromApi = getListFromNews(0);
+              offset = 0;
+              setState(() {});
+            },
+          )
+        ],
       ),
       drawer: Drawer(),
       body: ListenableBuilder(
@@ -100,12 +110,11 @@ class _MyHomeState extends State<MyHome> {
                     // TODO
                     int itemlength = (snapshot.data?.length ?? 0);
                     return RefreshIndicator(
-                      onRefresh: () { 
-                        newsFromApi = getListFromNews(offset += 10);
-                        offset = offset+10;
-                        setState(() {
-                          
-                        });
+                      onRefresh: () {
+                        offset += 10;
+                        newsFromApi = getListFromNews(offset);
+                        debugPrint(offset.toString());
+                        setState(() {});
                         return newsFromApi;
                       },
 
