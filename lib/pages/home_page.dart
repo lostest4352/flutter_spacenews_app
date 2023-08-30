@@ -15,14 +15,12 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   final boolNotifier = BoolNotifier();
 
-  Future<List<News>> newsFromApi = getListFromNews().then((value) => value.$1);
-  //
-  late Future<List<int>> newsLength;
+  late Future<List<News>> newsFromApi;
 
   @override
   void initState() {
     super.initState();
-    newsLength = getListFromNews().then((value) => value.$2);
+    newsFromApi = getListFromNews();
   }
 
   @override
@@ -84,7 +82,7 @@ class _MyHomeState extends State<MyHome> {
               ),
               Expanded(
                 child: FutureBuilder(
-                  future: newsLength,
+                  future: newsFromApi,
                   builder: (context, snapshot) {
                     // if (!snapshot.hasData) {
                     //   return const Center(
@@ -97,10 +95,13 @@ class _MyHomeState extends State<MyHome> {
                         child: Text(snapshot.error.toString()),
                       );
                     }
+                    // TODO 
+                    int itemlength = snapshot.data?.length ?? 0;
                     return RefreshIndicator(
                       onRefresh: () {
                         return getListFromNews();
                       },
+
                       // Replaced Sliver with Listview if issues happen and remove CustomScrollView
                       child: CustomScrollView(
                         slivers: [
@@ -108,7 +109,7 @@ class _MyHomeState extends State<MyHome> {
                             separatorBuilder: (context, index) {
                               return const Divider();
                             },
-                            itemCount: snapshot.data?.length ?? 0,
+                            itemCount: itemlength,
                             itemBuilder: (context, index) {
                               // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                               // This is where list is made so before this list is to be empty
@@ -125,77 +126,63 @@ class _MyHomeState extends State<MyHome> {
                                 }
                               }
 
-                              return FutureBuilder(
-                                future: newsFromApi,
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
+                              return ListTile(
+                                selected: true,
+                                selectedTileColor:
+                                    // > instead of >= if issue
+                                    // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
+                                    (boolNotifier.tileClicked.length >= index &&
+                                            boolNotifier.tileClicked[index])
+                                        // ? Colors.grey.shade800
+                                        ? selectedColor
+                                        : null,
+                                onLongPress: () {
+                                  boolNotifier.changeListTileState(index);
+                                },
+                                onTap: () {
+                                  if (boolNotifier.tileClicked.contains(true)) {
+                                    boolNotifier.changeListTileState(index);
+
+                                    List itemsContainingTrue = [];
+                                    for (final boolItem
+                                        in boolNotifier.tileClicked) {
+                                      if (boolItem == true) {
+                                        itemsContainingTrue.add(boolItem);
+                                      }
+                                    }
+                                    debugPrint(
+                                        "selected items length: ${itemsContainingTrue.length.toString()}");
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return NewsPage(
+                                              news: snapshot.data?[index]
+                                                  as News);
+                                        },
+                                      ),
                                     );
                                   }
-                                  return ListTile(
-                                    selected: true,
-                                    selectedTileColor:
-                                        // > instead of >= if issue
-                                        // total length of the tileClicked list which has either true or false and never null because if it was null, listtile wouldnt be made in the first place
-                                        (boolNotifier.tileClicked.length >=
-                                                    index &&
-                                                boolNotifier.tileClicked[index])
-                                            // ? Colors.grey.shade800
-                                            ? selectedColor
-                                            : null,
-                                    onLongPress: () {
-                                      boolNotifier.changeListTileState(index);
-                                    },
-                                    onTap: () {
-                                      if (boolNotifier.tileClicked
-                                          .contains(true)) {
-                                        boolNotifier.changeListTileState(index);
-
-                                        List itemsContainingTrue = [];
-                                        for (final boolItem
-                                            in boolNotifier.tileClicked) {
-                                          if (boolItem == true) {
-                                            itemsContainingTrue.add(boolItem);
-                                          }
-                                        }
-                                        debugPrint(
-                                            "selected items length: ${itemsContainingTrue.length.toString()}");
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return NewsPage(
-                                                  news: snapshot.data?[index]
-                                                      as News);
-                                            },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    title: Text(
-                                      snapshot.data?[index].title ?? "no data",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    subtitle: Text(
-                                      snapshot.data?[index].summary ??
-                                          "no data",
-                                      style:
-                                          const TextStyle(color: Colors.blue),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    leading: ClipRRect(
-                                      child: Image.network(
-                                        snapshot.data?[index].image_url ?? "",
-                                        height: 100,
-                                        width: 80,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  );
                                 },
+                                title: Text(
+                                  snapshot.data?[index].title ?? "no data",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  snapshot.data?[index].summary ?? "no data",
+                                  style: const TextStyle(color: Colors.blue),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                leading: ClipRRect(
+                                  child: Image.network(
+                                    snapshot.data?[index].image_url ?? "",
+                                    height: 100,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               );
                             },
                           ),
