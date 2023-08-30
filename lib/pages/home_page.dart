@@ -35,6 +35,7 @@ class _MyHomeState extends State<MyHome> {
 
     return Scaffold(
       appBar: AppBar(
+        // Same as ${(offset / 10).toInt() +1}
         title: Text("Page ${offset ~/ 10 +1}"),
         actions: [
           IconButton(

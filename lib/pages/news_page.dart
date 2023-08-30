@@ -42,8 +42,8 @@ class _NewsPageState extends State<NewsPage> {
                 alignment: Alignment.centerLeft,
                 child: SelectableText(
                   widget.news.title,
-                  style:
-                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ),
             ),
@@ -61,12 +61,27 @@ class _NewsPageState extends State<NewsPage> {
               padding: const EdgeInsets.all(8.0),
               child: Image.network(widget.news.image_url),
             ),
-            InteractiveViewer(
+            Container(
+              margin: const EdgeInsets.all(8),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SelectableText(widget.news.summary),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Container(
                 margin: const EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SelectableText(widget.news.summary),
+                child: Center(
+                  child: Wrap(
+                    children: [
+                      const Text("News link:"),
+                      SelectableText(
+                        widget.news.url,
+                        style: const TextStyle(color: Colors.blue),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
