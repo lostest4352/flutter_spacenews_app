@@ -37,7 +37,8 @@ class _NewsPageState extends State<NewsPage> {
               height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.only(
+                  left: 12, right: 12, top: 12, bottom: 4),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: SelectableText(
@@ -51,7 +52,11 @@ class _NewsPageState extends State<NewsPage> {
               padding: const EdgeInsets.only(left: 12, bottom: 8),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Date Published: $formattedTime"),
+                child: Text(
+                  "Date Published: $formattedTime",
+                  style: const TextStyle(
+                      fontStyle: FontStyle.italic, fontSize: 13),
+                ),
               ),
             ),
             Padding(
