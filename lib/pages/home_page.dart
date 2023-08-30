@@ -215,6 +215,28 @@ class _MyHomeState extends State<MyHome> {
                               );
                             },
                           ),
+                          SliverToBoxAdapter(
+                            child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.refresh),
+                                    ),
+                                    const Text(
+                                      "Load More",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );
