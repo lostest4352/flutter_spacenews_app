@@ -110,8 +110,8 @@ class _MyHomeState extends State<MyHome> {
                     // }
                     if (snapshot.hasError) {
                       debugPrint(snapshot.error.toString());
-                      return Center(
-                        child: Text(snapshot.error.toString()),
+                      return const Center(
+                        child: Text("No Internet Connection"),
                       );
                     }
                     // TODO
@@ -165,6 +165,7 @@ class _MyHomeState extends State<MyHome> {
                                   if (boolNotifier.tileClicked.contains(true)) {
                                     boolNotifier.changeListTileState(index);
 
+                                    // This code till debugPrint was made only to debug print and no other uses
                                     List itemsContainingTrue = [];
                                     for (final boolItem
                                         in boolNotifier.tileClicked) {
