@@ -23,7 +23,6 @@ class News {
     required this.updated_at,
     required this.content,
   });
-  
 
   Map<String, dynamic> toMap() {
     return {

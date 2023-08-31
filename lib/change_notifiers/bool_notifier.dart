@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BoolNotifier extends ChangeNotifier {
+class BoolNotifier with ChangeNotifier {
   List<bool> tileClicked = [];
 
   void changeListTileState(int index) {
