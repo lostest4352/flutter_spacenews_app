@@ -41,22 +41,12 @@ class _MyHomeState extends State<MyHome> {
         title: Text("Page $pageNo"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
-              if (offset > 0) {
-                offset -= 10;
-                newsFromApi = getListFromNews(offset);
-                setState(() {});
-              }
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward_ios),
-            onPressed: () {
-              offset += 10;
+              offset = 0;
               newsFromApi = getListFromNews(offset);
               setState(() {});
             },
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -124,9 +114,8 @@ class _MyHomeState extends State<MyHome> {
                     int itemlength = (snapshot.data?.length ?? 0);
                     return RefreshIndicator(
                       onRefresh: () {
-                        offset = 0;
                         newsFromApi = getListFromNews(offset);
-                        debugPrint(offset.toString());
+
                         setState(() {});
                         return newsFromApi;
                       },
@@ -219,18 +208,29 @@ class _MyHomeState extends State<MyHome> {
                             child: ListTile(
                               title: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.refresh),
+                                      icon: const Icon(Icons.arrow_back),
+                                      onPressed: () {
+                                        if (offset > 0) {
+                                          offset -= 10;
+                                          newsFromApi = getListFromNews(offset);
+                                          setState(() {});
+                                        }
+                                      },
                                     ),
-                                    const Text(
-                                      "Load More",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.arrow_forward),
+                                      onPressed: () {
+                                        offset += 10;
+                                        newsFromApi = getListFromNews(offset);
+                                        setState(() {});
+                                      },
                                     ),
                                   ],
                                 ),
