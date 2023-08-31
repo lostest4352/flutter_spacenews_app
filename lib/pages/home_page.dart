@@ -33,8 +33,8 @@ class _MyHomeState extends State<MyHome> {
         ? Colors.grey.shade800
         : Colors.blueGrey.shade100;
 
-    // Same as ${(offset / 10).toInt() +1}
-    int pageNo = offset ~/ 10 + 1;
+    // Same as (offset / 10).toInt() +1
+    int pageNo = (offset ~/ 10) + 1;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +54,7 @@ class _MyHomeState extends State<MyHome> {
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: const Drawer(),
       body: ListenableBuilder(
         listenable: boolNotifier,
         builder: (context, child) {
@@ -114,7 +114,7 @@ class _MyHomeState extends State<MyHome> {
                         child: Text("No Internet Connection"),
                       );
                     }
-                    // TODO
+                    //
                     int itemlength = (snapshot.data?.length ?? 0);
                     return RefreshIndicator(
                       onRefresh: () {
@@ -136,13 +136,11 @@ class _MyHomeState extends State<MyHome> {
                               // Fill only when its empty otherwise there is null error. It'll try to fill the value of tiles not clicked yet and there's error
                               // This is where list is made so before this list is to be empty
                               if (boolNotifier.tileClicked.isEmpty) {
-                                // boolNotifier.tileClicked = List.filled(5, false);
+                                // boolNotifier.tileClicked = List.filled(itemlength, false);
 
                                 // Longer form of above code
                                 List<bool> listTileBool = [];
-                                for (int i = 0;
-                                    i < (snapshot.data?.length ?? 0);
-                                    i++) {
+                                for (int i = 0; i < itemlength; i++) {
                                   listTileBool.add(false);
                                   boolNotifier.tileClicked = listTileBool;
                                 }
