@@ -41,6 +41,7 @@ class _MyHomeState extends State<MyHome> {
         title: Text("Page $pageNo"),
         actions: [
           IconButton(
+            tooltip: 'Go back to Page 1',
             onPressed: () {
               offset = 0;
               newsFromApi = getListFromNews(offset);
@@ -215,6 +216,7 @@ class _MyHomeState extends State<MyHome> {
                                   alignment: WrapAlignment.center,
                                   children: [
                                     IconButton(
+                                      tooltip: "Previous Page",
                                       icon: const Icon(Icons.arrow_back),
                                       onPressed: () {
                                         if (offset > 0) {
@@ -234,6 +236,7 @@ class _MyHomeState extends State<MyHome> {
                                       width: 20,
                                     ),
                                     IconButton(
+                                      tooltip: "Next Page",
                                       icon: const Icon(Icons.arrow_forward),
                                       onPressed: () {
                                         offset += 10;
