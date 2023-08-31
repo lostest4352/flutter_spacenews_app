@@ -44,9 +44,10 @@ class _MyHomeState extends State<MyHome> {
             onPressed: () {
               offset = 0;
               newsFromApi = getListFromNews(offset);
+
+              setState(() {});
               boolNotifier.tileClicked =
                   List.filled(boolNotifier.tileClicked.length, false);
-              setState(() {});
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -219,12 +220,13 @@ class _MyHomeState extends State<MyHome> {
                                         if (offset > 0) {
                                           offset -= 10;
                                           newsFromApi = getListFromNews(offset);
+
+                                          setState(() {});
                                           boolNotifier.tileClicked =
                                               List.filled(
                                                   boolNotifier
                                                       .tileClicked.length,
                                                   false);
-                                          setState(() {});
                                         }
                                       },
                                     ),
@@ -236,10 +238,11 @@ class _MyHomeState extends State<MyHome> {
                                       onPressed: () {
                                         offset += 10;
                                         newsFromApi = getListFromNews(offset);
+
+                                        setState(() {});
                                         boolNotifier.tileClicked = List.filled(
                                             boolNotifier.tileClicked.length,
                                             false);
-                                        setState(() {});
                                       },
                                     ),
                                   ],
