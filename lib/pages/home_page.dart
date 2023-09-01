@@ -55,6 +55,7 @@ class _MyHomeState extends State<MyHome> {
             onPressed: () {
               offset = 0;
               newsFromApi = getListFromNews(offset);
+              // pageNo dont work here for some reason unless pressed twice
               textEditingController.text = ((offset ~/ 10) + 1).toString();
               setState(() {});
               boolNotifier.tileClicked =
@@ -225,7 +226,7 @@ class _MyHomeState extends State<MyHome> {
                                           offset -= 10;
                                           newsFromApi = getListFromNews(offset);
                                           textEditingController.text =
-                                              ((offset ~/ 10) + 1).toString();
+                                              pageNo.toString();
                                           setState(() {});
                                           boolNotifier.tileClicked =
                                               List.filled(
@@ -269,7 +270,7 @@ class _MyHomeState extends State<MyHome> {
                                           if (convertedValue != 0) {
                                             offset = (convertedValue - 1) * 10;
                                             textEditingController.text =
-                                                ((offset ~/ 10) + 1).toString();
+                                                pageNo.toString();
                                             newsFromApi =
                                                 getListFromNews(offset);
                                             setState(() {});
