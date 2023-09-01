@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
 import 'package:flutter_api_1/data/news_api_data.dart';
 import 'package:flutter_api_1/models/news_model.dart';
@@ -251,6 +252,9 @@ class _MyHomeState extends State<MyHome> {
                                       height: 45,
                                       child: TextField(
                                         keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         controller: textEditingController,
                                       ),
                                     ),
@@ -263,12 +267,14 @@ class _MyHomeState extends State<MyHome> {
                                         onPressed: () {
                                           final convertedValue = int.parse(
                                               textEditingController.text);
-
-                                          offset = (convertedValue - 1) * 10;
-                                          textEditingController.text =
-                                              ((offset ~/ 10) + 1).toString();
-                                          newsFromApi = getListFromNews(offset);
-                                          setState(() {});
+                                          if (convertedValue != 0) {
+                                            offset = (convertedValue - 1) * 10;
+                                            textEditingController.text =
+                                                ((offset ~/ 10) + 1).toString();
+                                            newsFromApi =
+                                                getListFromNews(offset);
+                                            setState(() {});
+                                          }
                                         },
                                         icon: const Text("Go"),
                                       ),
