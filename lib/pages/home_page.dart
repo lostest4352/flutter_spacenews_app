@@ -54,7 +54,7 @@ class _MyHomeState extends State<MyHome> {
             onPressed: () {
               offset = 0;
               newsFromApi = getListFromNews(offset);
-
+              textEditingController.text = ((offset ~/ 10) + 1).toString();
               setState(() {});
               boolNotifier.tileClicked =
                   List.filled(boolNotifier.tileClicked.length, false);
@@ -223,6 +223,8 @@ class _MyHomeState extends State<MyHome> {
                                         if (offset > 0) {
                                           offset -= 10;
                                           newsFromApi = getListFromNews(offset);
+                                          textEditingController.text =
+                                              ((offset ~/ 10) + 1).toString();
                                           setState(() {});
                                           boolNotifier.tileClicked =
                                               List.filled(
@@ -261,7 +263,7 @@ class _MyHomeState extends State<MyHome> {
                                           final convertedValue = int.parse(
                                               textEditingController.text);
 
-                                          offset = (convertedValue * 10) - 1;
+                                          offset = (convertedValue - 1) * 10;
                                           textEditingController.text =
                                               ((offset ~/ 10) + 1).toString();
                                           newsFromApi = getListFromNews(offset);
@@ -279,7 +281,8 @@ class _MyHomeState extends State<MyHome> {
                                       onPressed: () {
                                         offset += 10;
                                         newsFromApi = getListFromNews(offset);
-
+                                        textEditingController.text =
+                                            ((offset ~/ 10) + 1).toString();
                                         setState(() {});
                                         boolNotifier.tileClicked = List.filled(
                                             boolNotifier.tileClicked.length,
