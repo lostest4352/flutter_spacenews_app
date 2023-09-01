@@ -252,7 +252,7 @@ class _MyHomeState extends State<MyHome> {
                                       child: Text("Page"),
                                     ),
                                     SizedBox(
-                                      width: 45,
+                                      width: 55,
                                       height: 45,
                                       child: TextField(
                                         keyboardType: TextInputType.number,
