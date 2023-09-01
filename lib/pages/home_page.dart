@@ -201,15 +201,16 @@ class _MyHomeState extends State<MyHome> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 leading: ClipRRect(
-                                  child: (snapshot.data?[index].image_url ==
-                                          null)
-                                      ? const Center()
-                                      : Image.network(
-                                          snapshot.data?[index].image_url ?? "",
-                                          height: 100,
-                                          width: 80,
-                                          fit: BoxFit.cover,
-                                        ),
+                                  child: Image.network(
+                                    snapshot.data?[index].image_url ?? "",
+                                    height: 100,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      debugPrint(error.toString());
+                                      return Container();
+                                    },
+                                  ),
                                 ),
                               );
                             },

@@ -83,7 +83,13 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(widget.news.image_url),
+              child: Image.network(
+                widget.news.image_url,
+                errorBuilder: (context, error, stackTrace) {
+                  debugPrint(error.toString());
+                  return Container();
+                },
+              ),
             ),
             Container(
               margin: const EdgeInsets.all(8),
