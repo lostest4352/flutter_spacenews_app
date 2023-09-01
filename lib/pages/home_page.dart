@@ -260,6 +260,10 @@ class _MyHomeState extends State<MyHome> {
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
                                         controller: textEditingController,
+                                        onTapOutside: (event) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
                                       ),
                                     ),
                                     Padding(
