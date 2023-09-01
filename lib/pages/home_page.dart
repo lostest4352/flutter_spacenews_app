@@ -278,6 +278,11 @@ class _MyHomeState extends State<MyHome> {
                                             newsFromApi =
                                                 getListFromNews(offset);
                                             setState(() {});
+                                            boolNotifier.tileClicked =
+                                                List.filled(
+                                              boolNotifier.tileClicked.length,
+                                              false,
+                                            );
                                           }
                                         },
                                         icon: const Text("Go"),
