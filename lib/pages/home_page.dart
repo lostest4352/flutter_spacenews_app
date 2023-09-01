@@ -230,7 +230,7 @@ class _MyHomeState extends State<MyHome> {
                                           offset -= 10;
                                           newsFromApi = getListFromNews(offset);
                                           textEditingController.text =
-                                              pageNo.toString();
+                                              ((offset ~/ 10) + 1).toString();
                                           setState(() {});
                                           boolNotifier.tileClicked =
                                               List.filled(
