@@ -243,25 +243,36 @@ class _MyHomeState extends State<MyHome> {
                                     const SizedBox(
                                       width: 20,
                                     ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 12, bottom: 8, right: 8, left: 8),
+                                      child: Text("Page"),
+                                    ),
+                                    // const SizedBox(
+                                    //   width: 5,
+                                    // ),
                                     SizedBox(
-                                      width: 60,
-                                      child: TextFormField(
+                                      width: 45,
+                                      height: 45,
+                                      child: TextField(
                                         keyboardType: TextInputType.number,
                                         controller: textEditingController,
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        final convertedValue = int.parse(
-                                            textEditingController.text);
-
-                                        offset = (convertedValue * 10) - 1;
-                                        textEditingController.text =
-                                            ((offset ~/ 10) + 1).toString();
-                                        newsFromApi = getListFromNews(offset);
-                                        setState(() {});
-                                      },
-                                      icon: const Text("Go"),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 2, bottom: 8, ),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          final convertedValue = int.parse(
+                                              textEditingController.text);
+                                    
+                                          offset = (convertedValue * 10) - 1;
+                                          textEditingController.text =
+                                              ((offset ~/ 10) + 1).toString();
+                                          newsFromApi = getListFromNews(offset);
+                                          setState(() {});
+                                        },
+                                        icon: const Text("Go"),
+                                      ),
                                     ),
                                     const SizedBox(
                                       width: 20,
