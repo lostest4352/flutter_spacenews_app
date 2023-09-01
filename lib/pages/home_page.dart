@@ -19,10 +19,19 @@ class _MyHomeState extends State<MyHome> {
 
   int offset = 0;
 
+  final TextEditingController textEditingController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    textEditingController.text = ((offset ~/ 10) + 1).toString();
     newsFromApi = getListFromNews(offset);
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -230,6 +239,29 @@ class _MyHomeState extends State<MyHome> {
                                                   false);
                                         }
                                       },
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 60,
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        controller: textEditingController,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        final convertedValue = int.parse(
+                                            textEditingController.text);
+
+                                        offset = (convertedValue * 10) - 1;
+                                        textEditingController.text =
+                                            ((offset ~/ 10) + 1).toString();
+                                        newsFromApi = getListFromNews(offset);
+                                        setState(() {});
+                                      },
+                                      icon: const Text("Go"),
                                     ),
                                     const SizedBox(
                                       width: 20,
