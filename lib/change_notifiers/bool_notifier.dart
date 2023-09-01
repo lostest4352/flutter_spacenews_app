@@ -16,4 +16,9 @@ class BoolNotifier with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void unselectAll() {
+    tileClicked = List.filled(tileClicked.length, false);
+    notifyListeners();
+  }
 }

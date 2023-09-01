@@ -58,8 +58,7 @@ class _MyHomeState extends State<MyHome> {
               // pageNo dont work here for some reason unless pressed twice
               textEditingController.text = ((offset ~/ 10) + 1).toString();
               setState(() {});
-              boolNotifier.tileClicked =
-                  List.filled(boolNotifier.tileClicked.length, false);
+              boolNotifier.unselectAll();
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -232,11 +231,7 @@ class _MyHomeState extends State<MyHome> {
                                           textEditingController.text =
                                               ((offset ~/ 10) + 1).toString();
                                           setState(() {});
-                                          boolNotifier.tileClicked =
-                                              List.filled(
-                                            boolNotifier.tileClicked.length,
-                                            false,
-                                          );
+                                          boolNotifier.unselectAll();
                                         }
                                       },
                                     ),
@@ -282,11 +277,7 @@ class _MyHomeState extends State<MyHome> {
                                             newsFromApi =
                                                 getListFromNews(offset);
                                             setState(() {});
-                                            boolNotifier.tileClicked =
-                                                List.filled(
-                                              boolNotifier.tileClicked.length,
-                                              false,
-                                            );
+                                            boolNotifier.unselectAll();
                                           }
                                         },
                                         icon: const Text("Go"),
@@ -304,9 +295,7 @@ class _MyHomeState extends State<MyHome> {
                                         textEditingController.text =
                                             ((offset ~/ 10) + 1).toString();
                                         setState(() {});
-                                        boolNotifier.tileClicked = List.filled(
-                                            boolNotifier.tileClicked.length,
-                                            false);
+                                        boolNotifier.unselectAll();
                                       },
                                     ),
                                   ],
