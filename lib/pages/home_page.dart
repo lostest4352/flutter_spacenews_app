@@ -112,11 +112,6 @@ class _MyHomeState extends State<MyHome> {
                 child: FutureBuilder(
                   future: newsFromApi,
                   builder: (context, snapshot) {
-                    // if (!snapshot.hasData) {
-                    //   return const Center(
-                    //     child: CircularProgressIndicator(),
-                    //   );
-                    // }
                     if (snapshot.hasError) {
                       debugPrint(snapshot.error.toString());
                       return const Center(
@@ -128,7 +123,6 @@ class _MyHomeState extends State<MyHome> {
                     return RefreshIndicator(
                       onRefresh: () {
                         newsFromApi = getListFromNews(offset);
-
                         setState(() {});
                         return newsFromApi;
                       },
@@ -171,7 +165,6 @@ class _MyHomeState extends State<MyHome> {
                                 onTap: () {
                                   if (boolNotifier.tileClicked.contains(true)) {
                                     boolNotifier.changeListTileState(index);
-
                                     // This code till debugPrint was made only to debug print and no other uses
                                     List itemsContainingTrue = [];
                                     for (final boolItem
@@ -188,8 +181,8 @@ class _MyHomeState extends State<MyHome> {
                                       MaterialPageRoute(
                                         builder: (context) {
                                           return NewsPage(
-                                              news: snapshot.data?[index]
-                                                  as News);
+                                            news: snapshot.data?[index] as News,
+                                          );
                                         },
                                       ),
                                     );
@@ -230,13 +223,12 @@ class _MyHomeState extends State<MyHome> {
                                         if (offset > 0) {
                                           offset -= 10;
                                           newsFromApi = getListFromNews(offset);
-
                                           setState(() {});
                                           boolNotifier.tileClicked =
                                               List.filled(
-                                                  boolNotifier
-                                                      .tileClicked.length,
-                                                  false);
+                                            boolNotifier.tileClicked.length,
+                                            false,
+                                          );
                                         }
                                       },
                                     ),
@@ -244,12 +236,13 @@ class _MyHomeState extends State<MyHome> {
                                       width: 20,
                                     ),
                                     const Padding(
-                                      padding: EdgeInsets.only(top: 12, bottom: 8, right: 8, left: 8),
+                                      padding: EdgeInsets.only(
+                                          top: 12,
+                                          bottom: 8,
+                                          right: 8,
+                                          left: 8),
                                       child: Text("Page"),
                                     ),
-                                    // const SizedBox(
-                                    //   width: 5,
-                                    // ),
                                     SizedBox(
                                       width: 45,
                                       height: 45,
@@ -259,12 +252,15 @@ class _MyHomeState extends State<MyHome> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2, bottom: 8, ),
+                                      padding: const EdgeInsets.only(
+                                        top: 2,
+                                        bottom: 8,
+                                      ),
                                       child: IconButton(
                                         onPressed: () {
                                           final convertedValue = int.parse(
                                               textEditingController.text);
-                                    
+
                                           offset = (convertedValue * 10) - 1;
                                           textEditingController.text =
                                               ((offset ~/ 10) + 1).toString();
