@@ -85,8 +85,8 @@ class _NewsPageState extends State<NewsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CachedNetworkImage(
-               imageUrl: widget.news.image_url,
-                errorWidget: (context, error, stackTrace) {
+                imageUrl: widget.news.image_url,
+                errorWidget: (context, url, error) {
                   debugPrint(error.toString());
                   return Container();
                 },
