@@ -45,7 +45,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
       textEditingController.text = ((offset ~/ 10) + 1).toString();
       isVisible = false;
     });
-    Timer(const Duration(milliseconds: 600), () {
+    Timer(const Duration(milliseconds: 700), () {
       setState(() {
         isVisible = true;
         scrollController.jumpTo(0);
