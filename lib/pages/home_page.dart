@@ -217,7 +217,10 @@ class _MyHomeState extends State<MyHome> {
                                     height: 100,
                                     width: 80,
                                     fit: BoxFit.cover,
-                                    
+                                    errorWidget: (context, error, stackTrace) {
+                                      debugPrint(error.toString());
+                                      return Container();
+                                    },
                                   ),
                                 ),
                               );
