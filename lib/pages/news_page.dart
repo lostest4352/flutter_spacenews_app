@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_api_1/models/news_model.dart';
 
@@ -83,9 +84,9 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(
-                widget.news.image_url,
-                errorBuilder: (context, error, stackTrace) {
+              child: CachedNetworkImage(
+               imageUrl: widget.news.image_url,
+                errorWidget: (context, error, stackTrace) {
                   debugPrint(error.toString());
                   return Container();
                 },

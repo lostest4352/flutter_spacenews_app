@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
@@ -200,15 +201,23 @@ class _MyHomeState extends State<MyHome> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 leading: ClipRRect(
-                                  child: Image.network(
-                                    snapshot.data?[index].image_url ?? "",
+                                  // child: Image.network(
+                                  //   snapshot.data?[index].image_url ?? "",
+                                  //   height: 100,
+                                  //   width: 80,
+                                  //   fit: BoxFit.cover,
+                                  //   errorBuilder: (context, error, stackTrace) {
+                                  //     debugPrint(error.toString());
+                                  //     return Container();
+                                  //   },
+                                  // ),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        snapshot.data?[index].image_url ?? "",
                                     height: 100,
                                     width: 80,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      debugPrint(error.toString());
-                                      return Container();
-                                    },
+                                    
                                   ),
                                 ),
                               );
