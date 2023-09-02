@@ -21,6 +21,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
   late Future<List<News>> newsFromApi;
 
+  // The api called page limit offset. Eg 10 offset meant after 10 items.
   int offset = 0;
 
   final TextEditingController textEditingController = TextEditingController();
@@ -32,19 +33,21 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
     super.initState();
     textEditingController.text = ((offset ~/ 10) + 1).toString();
     newsFromApi = getListFromNews(offset);
-    //
   }
 
+  // Divided offset, which is after certain amount of value. It starts from 0 so added 1 to have proper index(for user)
   void changePage(int offsetValue) {
-    offset = offsetValue;
-    newsFromApi = getListFromNews(offset);
-    textEditingController.text = ((offset ~/ 10) + 1).toString();
-    isVisible = false;
-    Timer(const Duration(milliseconds: 700), () {
-      isVisible = true;
-      setState(() {});
+    setState(() {
+      offset = offsetValue;
+      newsFromApi = getListFromNews(offset);
+      textEditingController.text = ((offset ~/ 10) + 1).toString();
+      isVisible = false;
     });
-    setState(() {});
+    Timer(const Duration(milliseconds: 600), () {
+      setState(() {
+        isVisible = true;
+      });
+    });
     boolNotifier.unselectAll();
   }
 
@@ -72,12 +75,6 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
           IconButton(
             tooltip: 'Go back to Page 1',
             onPressed: () {
-              // offset = 0;
-              // newsFromApi = getListFromNews(offset);
-              // // pageNo dont work here for some reason unless pressed twice
-              // textEditingController.text = ((offset ~/ 10) + 1).toString();
-              // setState(() {});
-              // boolNotifier.unselectAll();
               changePage(0);
             },
             icon: const Icon(Icons.refresh),
@@ -145,7 +142,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                       onRefresh: () {
                         // newsFromApi = getListFromNews(offset);
                         // setState(() {});
-                        // may cause issues
+                        //
                         changePage(offset);
                         return newsFromApi;
                       },
@@ -183,7 +180,6 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                                       (boolNotifier.tileClicked.length >=
                                                   index &&
                                               boolNotifier.tileClicked[index])
-                                          // ? Colors.grey.shade800
                                           ? selectedColor
                                           : null,
                                   onLongPress: () {
@@ -255,21 +251,6 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                                         icon: const Icon(Icons.arrow_back),
                                         onPressed: () {
                                           if (offset > 0) {
-                                            // offset -= 10;
-                                            // newsFromApi =
-                                            //     getListFromNews(offset);
-                                            // textEditingController.text =
-                                            //     ((offset ~/ 10) + 1).toString();
-                                            // isVisible = false;
-
-                                            // setState(() {});
-                                            // Timer(
-                                            //     const Duration(
-                                            //         milliseconds: 700), () {
-                                            //   isVisible = true;
-                                            //   setState(() {});
-                                            // });
-                                            // boolNotifier.unselectAll();
                                             changePage(offset - 10);
                                           }
                                         },
@@ -311,15 +292,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                                             final convertedValue = int.parse(
                                                 textEditingController.text);
                                             if (convertedValue != 0) {
-                                              // offset =
-                                              //     (convertedValue - 1) * 10;
-                                              // textEditingController.text =
-                                              //     ((offset ~/ 10) + 1)
-                                              //         .toString();
-                                              // newsFromApi =
-                                              //     getListFromNews(offset);
-                                              // setState(() {});
-                                              // boolNotifier.unselectAll();
+                                              // -1 to match the index. Input here starts with real life startin number 1 but programmming starts with 0, and api follows that rule so converting back to coding logic
                                               changePage(
                                                   (convertedValue - 1) * 10);
                                             }
@@ -334,19 +307,6 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                                         tooltip: "Next Page",
                                         icon: const Icon(Icons.arrow_forward),
                                         onPressed: () {
-                                          // offset += 10;
-                                          // newsFromApi = getListFromNews(offset);
-                                          // textEditingController.text =
-                                          //     ((offset ~/ 10) + 1).toString();
-                                          // isVisible = false;
-                                          // Timer(
-                                          //     const Duration(milliseconds: 700),
-                                          //     () {
-                                          //   isVisible = true;
-                                          //   setState(() {});
-                                          // });
-                                          // setState(() {});
-                                          // boolNotifier.unselectAll();
                                           changePage(offset + 10);
                                         },
                                       ),
