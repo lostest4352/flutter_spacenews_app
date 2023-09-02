@@ -28,6 +28,8 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
   bool isVisible = true;
 
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +43,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
       offset = offsetValue;
       newsFromApi = getListFromNews(offset);
       textEditingController.text = ((offset ~/ 10) + 1).toString();
+      scrollController.jumpTo(0);
       isVisible = false;
     });
     Timer(const Duration(milliseconds: 600), () {
@@ -152,6 +155,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
                         opacity: isVisible ? 1.0 : 0,
                         duration: const Duration(milliseconds: 700),
                         child: CustomScrollView(
+                          controller: scrollController,
                           slivers: [
                             SliverList.separated(
                               separatorBuilder: (context, index) {
