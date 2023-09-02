@@ -43,12 +43,12 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
       offset = offsetValue;
       newsFromApi = getListFromNews(offset);
       textEditingController.text = ((offset ~/ 10) + 1).toString();
-      scrollController.jumpTo(0);
       isVisible = false;
     });
     Timer(const Duration(milliseconds: 600), () {
       setState(() {
         isVisible = true;
+        scrollController.jumpTo(0);
       });
     });
     boolNotifier.unselectAll();
