@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_api_1/change_notifiers/bool_notifier.dart';
 import 'package:flutter_api_1/data/news_api_data.dart';
 import 'package:flutter_api_1/models/news_model.dart';
+import 'package:flutter_api_1/pages/app_drawer.dart';
 import 'package:flutter_api_1/pages/list_page.dart';
 import 'package:flutter_api_1/pages/news_page.dart';
 
@@ -84,7 +85,7 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
-      drawer: const Drawer(),
+      drawer: const AppDrawer(),
       body: ListenableBuilder(
         listenable: boolNotifier,
         builder: (context, child) {
