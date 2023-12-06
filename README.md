@@ -1,3 +1,1 @@
-# flutter_api_1
-
-flutter api app
+A simple app that shows news using space news api. Select options from drawer to show either page version or infinite scroll version.
